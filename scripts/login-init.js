@@ -7,19 +7,9 @@
 (function() {
   'use strict';
 
-
   // Initialize event listeners for login modal buttons
   function initializeLoginButtons() {
     console.log('[Login Init] Initializing login buttons...');
-
-    // Profile hub button - Show "Under Development" popup
-    const profileBtn = document.getElementById('profile-hub-btn');
-    if (profileBtn) {
-      profileBtn.addEventListener('click', function() {
-        // REMOVED: Development modal - showAuthUnderDevelopmentPopup();
-      });
-      console.log('[Login Init] Profile hub button listener attached');
-    }
 
     // Google login button - Trigger OAuth flow
     const googleBtn = document.getElementById('btn-google-login');
@@ -62,6 +52,18 @@
         }
       });
       console.log('[Login Init] Cancel button listener attached');
+    }
+
+    // Initialize authManager for persistent login state
+    if (window.authManager && typeof window.authManager.init === 'function') {
+      console.log('[Login Init] Initializing authManager...');
+      window.authManager.init().then(status => {
+        console.log('[Login Init] Auth status:', status);
+      }).catch(err => {
+        console.error('[Login Init] Error initializing authManager:', err);
+      });
+    } else {
+      console.warn('[Login Init] authManager.init() not available');
     }
   }
 
