@@ -444,17 +444,20 @@ document.addEventListener('click', function(e) {
   const action = target.getAttribute('data-action');
   const agencyId = target.getAttribute('data-agency-id');
 
+  console.log("[Agencies] Click detected - action:", action, "agencyId:", agencyId);
   switch(action) {
     case 'toggle-review':
       // Call toggleReviewSection function with the button and event
       if (typeof toggleReviewSection === 'function') {
         toggleReviewSection(target, e);
+        console.log("[Agencies] toggleReviewSection check:", typeof toggleReviewSection);
       }
       break;
 
     case 'toggle-past-reviews':
       // Call togglePastReviews with the agency ID
       if (agencyId && typeof togglePastReviews === 'function') {
+        console.log("[Agencies] togglePastReviews check:", typeof togglePastReviews, window.togglePastReviews);
         togglePastReviews(agencyId);
       }
       break;
@@ -476,6 +479,7 @@ document.addEventListener('click', function(e) {
 
     case 'open-jamaica-modal':
       // Call openJamaicaLegalModal with event
+      console.log("[Agencies] openJamaicaLegalModal check:", typeof openJamaicaLegalModal, window.openJamaicaLegalModal);
       if (typeof openJamaicaLegalModal === 'function') {
         e.preventDefault();
         openJamaicaLegalModal(e);

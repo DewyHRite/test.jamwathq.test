@@ -516,7 +516,6 @@
 
         console.log('✅ Finished loading all agency ratings');
       }
-    </script>
 
     // ========================================================================
     // SCRIPT 2: Profile Hub Management
@@ -604,84 +603,7 @@
           updateProfileHub();
         }
       });
-    </script>
 
-    <!-- Profile Hub Container - Positioned Above Support Container -->
-    <div class="profile-hub-container">
-      <button id="profile-hub-btn" class="profile-hub-btn" >
-        Login
-      </button>
-      <!-- Profile Icon with Yellow Glow -->
-      <div class="profile-icon" title="User Profile">
-        <i class="fa fa-user"></i>
-      </div>
-    </div>
-
-    <!-- Support Container - Horizontal Layout with Report Button Beside Gear Icon -->
-    <div class="support-container">
-      <!-- Report Problem Button -->
-      <a href="report-problem.html" class="report-problem-btn" title="Report a problem">
-        Report a problem
-      </a>
-      <!-- Floating Gear Icon with Yellow Glow -->
-      <a href="report-problem.html" class="floating-gear-icon" title="Report a problem">
-        <i class="fa fa-cog" aria-hidden="true"></i>
-      </a>
-    </div>
-
-    <!-- Video Ad Container - Bottom Left (Desktop Only) -->
-    <div id="video-ad-container" class="video-ad-container">
-      <!-- Header with Controls -->
-      <div class="video-ad-header">
-        <span class="video-ad-label">Sponsored</span>
-        <div class="video-ad-controls">
-          <button class="video-ad-btn video-ad-minimize" title="Minimize">
-            <i class="fa fa-minus"></i>
-          </button>
-          <button class="video-ad-btn video-ad-close" title="Close">
-            <i class="fa fa-times"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Video Content Area -->
-      <div class="video-ad-content">
-        <!-- Ad Badge -->
-        <div class="video-ad-badge">AD</div>
-
-        <!-- Video Player -->
-        <video class="video-ad-player" controls muted loop>
-          <!-- Video source will be loaded dynamically via JavaScript -->
-          <!-- Example: <source src="path/to/video.mp4" type="video/mp4"> -->
-        </video>
-
-        <!-- Placeholder (shown when no video loaded or error) -->
-        <div class="video-ad-placeholder">
-          <i class="fa fa-video"></i>
-          <div class="video-ad-placeholder-text">
-            Video ad loading...
-          </div>
-        </div>
-      </div>
-
-      <!-- Footer with Info -->
-      <div class="video-ad-footer">
-        <div class="video-ad-info">
-          <span class="video-ad-sponsor-label">Sponsor:</span>
-          <a href="#" class="video-ad-sponsor" target="_blank" rel="noopener">
-            Advertisement
-          </a>
-        </div>
-        <button class="video-ad-sound muted" title="Unmute">
-          <i class="fa fa-volume-mute"></i>
-        </button>
-      </div>
-
-      <!-- Restore Button (shown when minimized) -->
-      <div class="video-ad-restore" title="Click to restore video ad">
-        <i class="fa fa-play-circle"></i>
-      </div>
-    </div>
 
     // ========================================================================
     // SCRIPT 3: Video Ad Initialization
@@ -724,3 +646,4 @@
   window.closeLoginModal = closeLoginModal;
   
 })();
+console.log('[Page-Agencies] Module loaded and functions exported');
