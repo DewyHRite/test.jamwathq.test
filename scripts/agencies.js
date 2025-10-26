@@ -114,11 +114,6 @@ function toggleReviewSection(buttonElement, event) {
         event.preventDefault();
     }
 
-    // SHOW UNDER DEVELOPMENT POPUP - Feature requires ad funding
-    // REMOVED: Development modal - showUnderDevelopmentPopup('Leave a Review');
-    return;
-
-    /* ORIGINAL CODE - DISABLED FOR LIVE RELEASE
     const agencyElement = buttonElement.closest('.agency-info');
     const reviewSection = agencyElement.querySelector('.review-section');
 
@@ -168,7 +163,6 @@ function toggleReviewSection(buttonElement, event) {
         buttonElement.classList.remove('btn-secondary');
         buttonElement.classList.add('btn-primary');
     }
-    */
 }
 
 /**
