@@ -453,16 +453,11 @@ document.addEventListener('click', function(e) {
       break;
 
     case 'toggle-past-reviews':
-      // SHOW UNDER DEVELOPMENT POPUP - Feature requires ad funding
-      // REMOVED: Development modal - showUnderDevelopmentPopup('View Past Reviews');
-      break;
-      /* ORIGINAL CODE - DISABLED FOR LIVE RELEASE
       // Call togglePastReviews with the agency ID
       if (agencyId && typeof togglePastReviews === 'function') {
         togglePastReviews(agencyId);
       }
       break;
-      */
 
     case 'close-past-reviews':
       // Call closePastReviews with the agency ID

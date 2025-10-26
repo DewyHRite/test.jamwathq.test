@@ -706,4 +706,21 @@
         }
       });
 
+  // ========================================================================
+  // GLOBAL EXPORTS - Functions needed by agencies.js event delegation
+  // ========================================================================
+  
+  // Export functions to global scope for event delegation in agencies.js
+  window.openJamaicaLegalModal = openJamaicaLegalModal;
+  window.closeJamaicaLegalModal = closeJamaicaLegalModal;
+  window.togglePastReviews = togglePastReviews;
+  window.closePastReviews = closePastReviews;
+  window.validateAndSubmitReview = validateAndSubmitReview;
+  window.acceptTOS = acceptTOS;
+  window.declineTOS = declineTOS;
+  window.openTOSModal = openTOSModal;
+  window.closeTOSModal = closeTOSModal;
+  window.openLoginModal = openLoginModal;
+  window.closeLoginModal = closeLoginModal;
+  
 })();
