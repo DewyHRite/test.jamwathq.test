@@ -1,5 +1,6 @@
 // List of Agency Page - Filter and Review System
 // JamWatHQ - Optimized for performance
+// Updated: 2025-10-27 - Force GitHub Pages cache refresh
 
 let totalReviews = 0;
 let totalRating = 0;
