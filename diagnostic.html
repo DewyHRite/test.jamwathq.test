@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Site Diagnostic - JamWatHQ</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #1a1a1a; color: #fff; }
+        .test { margin: 20px 0; padding: 15px; background: #2a2a2a; border-left: 4px solid #ffee00; }
+        .pass { border-left-color: #00ff00; }
+        .fail { border-left-color: #ff0000; }
+        h1 { color: #ffee00; }
+        h2 { color: #fff; margin-top: 0; }
+        pre { background: #000; padding: 10px; overflow-x: auto; }
+        button { background: #ffee00; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-size: 16px; margin: 5px; }
+        button:hover { background: #fff; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Test Site Diagnostic Tool</h1>
+    <p>This page will help diagnose what version of agencies.js is being loaded.</p>
+
+    <div class="test">
+        <h2>Test 1: Check if showUnderDevelopmentPopup function exists</h2>
+        <div id="test1-result"></div>
+    </div>
+
+    <div class="test">
+        <h2>Test 2: Load agencies.js and check content</h2>
+        <div id="test2-result"></div>
+    </div>
+
+    <div class="test">
+        <h2>Test 3: Check script URL being loaded</h2>
+        <div id="test3-result"></div>
+    </div>
+
+    <div class="test">
+        <h2>Test 4: Manual test</h2>
+        <button onclick="runManualTest()">Click to Test Modal</button>
+        <div id="test4-result"></div>
+    </div>
+
+    <script>
+        // Test 1: Check if function exists
+        function test1() {
+            const result = document.getElementById('test1-result');
+            if (typeof showUnderDevelopmentPopup === 'function') {
+                result.innerHTML = '<strong style="color: #ff0000;">❌ FAIL: showUnderDevelopmentPopup function EXISTS (old version)</strong>';
+                result.parentElement.classList.add('fail');
+            } else {
+                result.innerHTML = '<strong style="color: #00ff00;">✅ PASS: showUnderDevelopmentPopup function does NOT exist (correct version)</strong>';
+                result.parentElement.classList.add('pass');
+            }
+        }
+
+        // Test 2: Fetch and check script content
+        async function test2() {
+            const result = document.getElementById('test2-result');
+            result.innerHTML = 'Loading...';
+
+            try {
+                const response = await fetch('scripts/agencies.js?v=' + Date.now());
+                const text = await response.text();
+
+                let output = '';
+
+                // Check for updated timestamp
+                if (text.includes('Updated: 2025-10-27')) {
+                    output += '<p style="color: #00ff00;">✅ File has updated timestamp (2025-10-27)</p>';
+                } else {
+                    output += '<p style="color: #ff0000;">❌ File missing updated timestamp</p>';
+                }
+
+                // Check for "features enabled" comment
+                if (text.includes('Under Development popup removed - all features now enabled')) {
+                    output += '<p style="color: #00ff00;">✅ File has "features enabled" comment</p>';
+                } else {
+                    output += '<p style="color: #ff0000;">❌ File missing "features enabled" comment</p>';
+                }
+
+                // Check for showUnderDevelopmentPopup function
+                if (text.includes('function showUnderDevelopmentPopup')) {
+                    output += '<p style="color: #ff0000;">❌ File contains showUnderDevelopmentPopup function (OLD VERSION)</p>';
+                    result.parentElement.classList.add('fail');
+                } else {
+                    output += '<p style="color: #00ff00;">✅ File does NOT contain showUnderDevelopmentPopup function (CORRECT VERSION)</p>';
+                    result.parentElement.classList.add('pass');
+                }
+
+                // Show first 500 characters
+                output += '<pre>' + text.substring(0, 500) + '...</pre>';
+
+                result.innerHTML = output;
+            } catch (error) {
+                result.innerHTML = '<p style="color: #ff0000;">Error: ' + error.message + '</p>';
+                result.parentElement.classList.add('fail');
+            }
+        }
+
+        // Test 3: Check script URL
+        function test3() {
+            const result = document.getElementById('test3-result');
+            const scripts = document.getElementsByTagName('script');
+            let output = '<p>Scripts loaded by this page:</p><ul>';
+
+            for (let script of scripts) {
+                if (script.src) {
+                    output += '<li>' + script.src + '</li>';
+                }
+            }
+
+            output += '</ul>';
+            result.innerHTML = output;
+            result.parentElement.classList.add('pass');
+        }
+
+        // Test 4: Manual test
+        function runManualTest() {
+            const result = document.getElementById('test4-result');
+
+            if (typeof showUnderDevelopmentPopup === 'function') {
+                result.innerHTML = '<p style="color: #ff0000;">❌ The function EXISTS - showing modal...</p>';
+                showUnderDevelopmentPopup('Manual Test');
+                result.parentElement.classList.add('fail');
+            } else {
+                result.innerHTML = '<p style="color: #00ff00;">✅ The function does NOT exist - no modal will show</p>';
+                result.parentElement.classList.add('pass');
+            }
+        }
+
+        // Run tests on load
+        window.onload = function() {
+            test1();
+            test2();
+            test3();
+        };
+    </script>
+
+    <!-- Load agencies.js to test -->
+    <script src="scripts/agencies.js"></script>
+</body>
+</html>
