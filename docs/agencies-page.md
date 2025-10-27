@@ -59,6 +59,13 @@
   ```
   Expect the refreshed page to display all recent UI changes seen locally.
 
+- Post-deploy verification (2025-10-27 01:55 CDT):
+  ```pwsh
+  $url = "https://dewyhrite.github.io/test.jamwathq.test/agencies.html?v=202510270155"
+  $remoteHash = ([System.BitConverter]::ToString([System.Security.Cryptography.MD5]::Create().ComputeHash([System.Text.Encoding]::UTF8.GetBytes((Invoke-WebRequest -Uri $url -UseBasicParsing).Content)))).Replace("-","").ToLower()
+  # 2372f87a785b7e83d88bea62c5544e98 (matches local)
+  ```
+
 ---
 
 ## Evidence To Capture
