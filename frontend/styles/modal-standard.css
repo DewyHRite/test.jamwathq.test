@@ -1,0 +1,391 @@
+/**
+ * Standardized Modal Styling for JamWatHQ
+ * See docs/MODAL_STYLE_STANDARD_20251029.md for full documentation
+ * Generated: 2025-10-29
+ *
+ * Applies to: Login modals, TOS modals, Review popups
+ *
+ * Features:
+ * - Consistent positioning (margin: 5% auto)
+ * - Smooth slide-down animation
+ * - Glowing box-shadow effect
+ * - Backdrop blur (modern browsers)
+ * - Responsive breakpoints
+ * - Accessibility compliant
+ */
+
+/* ================================================
+   CSS VARIABLES - Button Consistency
+   ================================================ */
+:root {
+  --btn-standard-font-weight: 600;
+  --btn-standard-gap: 0.55em;
+  --btn-standard-line-height: 1.2;
+  --btn-standard-transition: transform 0.2s ease, box-shadow 0.2s ease,
+                             background-color 0.2s ease, color 0.2s ease,
+                             border-color 0.2s ease;
+
+  /* Agency Button Scaling */
+  --agency-button-base-font-size: 0.8rem;
+  --agency-button-base-padding-y: 0.35rem;
+  --agency-button-base-padding-x: 0.9rem;
+  --agency-button-scale: 1.2;
+  --agency-button-font-size: calc(var(--agency-button-base-font-size) * var(--agency-button-scale));
+  --agency-button-padding-y: calc(var(--agency-button-base-padding-y) * var(--agency-button-scale));
+  --agency-button-padding-x: calc(var(--agency-button-base-padding-x) * var(--agency-button-scale));
+  --agency-button-radius: 999px;
+
+  /* Apply to standard buttons */
+  --btn-standard-font-size: var(--agency-button-font-size);
+  --btn-standard-padding-y: var(--agency-button-padding-y);
+  --btn-standard-padding-x: var(--agency-button-padding-x);
+  --btn-standard-radius: var(--agency-button-radius);
+}
+
+/* ================================================
+   MODAL OVERLAY
+   ================================================ */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10001; /* Above all content, below critical system UI */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.95); /* Dark backdrop for focus */
+  backdrop-filter: blur(5px); /* Modern browsers - blur effect */
+  -webkit-backdrop-filter: blur(5px); /* Safari support */
+  justify-content: center;
+  align-items: center;
+}
+
+/* Show state - use flex for proper centering */
+.modal.show,
+.modal[style*="display: block"],
+.modal[style*="display: flex"] {
+  display: flex !important;
+}
+
+/* ================================================
+   MODAL CONTENT - Standard Size
+   ================================================ */
+.modal-content {
+  background-color: #000000;
+  border: 3px solid #ffee00;
+  padding: 2em;
+  text-align: center;
+  border-radius: 10px;
+
+  /* Positioning - User requirement */
+  margin: 5% auto;
+  width: 90%;
+  max-width: 900px; /* INCREASED: Allow wider modals (was 500px) */
+  position: relative;
+
+  /* Animation */
+  animation: slideDown 0.3s ease;
+
+  /* Visual Effects - User requirement */
+  box-shadow: 0 10px 40px rgba(255, 238, 0, 0.4);
+
+  /* Typography */
+  color: #919499;
+  letter-spacing: 0.015em;
+  box-sizing: border-box;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* ================================================
+   ANIMATION - Slide Down Effect
+   ================================================ */
+@keyframes slideDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ================================================
+   MODAL TYPE SPECIFIC SIZING
+   ================================================ */
+
+/* Login/Auth Modal - Standard size */
+.auth-modal-content {
+  max-width: 500px;
+}
+
+/* TOS Modal - Wider for legal text */
+.tos-modal-content {
+  max-width: 650px;
+}
+
+/* Reviews Modal - Widest for multiple reviews */
+.reviews-popup-content {
+  max-width: 800px;
+}
+
+/* ================================================
+   CLOSE BUTTON
+   ================================================ */
+.close-modal {
+  color: #ffee00;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 20px;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+  color: #fff;
+  transform: scale(1.1);
+  text-decoration: none;
+}
+
+/* ================================================
+   MODAL HEADERS
+   ================================================ */
+.modal-content h2 {
+  color: #ffee00;
+  margin-top: 0;
+  margin-bottom: 1em;
+  font-size: 1.8em;
+  font-weight: 600;
+}
+
+.modal-content p {
+  color: #ffffff;
+  line-height: 1.6;
+  margin-bottom: 1em;
+}
+
+/* ================================================
+   MOBILE RESPONSIVENESS
+   ================================================ */
+
+/* Tablet and below */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    margin: 3% auto;
+    padding: 1.5em;
+  }
+
+  .modal-content h2 {
+    font-size: 1.5em;
+  }
+
+  .close-modal {
+    font-size: 24px;
+  }
+}
+
+/* Mobile: 0-736px - Enhanced for touch devices */
+@media (max-width: 736px) {
+  /* Virtual keyboard handling */
+  .modal {
+    height: -webkit-fill-available;
+    -webkit-transform: translateZ(0);
+  }
+
+  .modal-content {
+    width: 95%;
+    margin: 10px auto;
+    padding: 15px;
+    max-height: 90vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: manipulation; /* Prevent double-tap zoom */
+  }
+
+  /* Touch targets - minimum 44x44px */
+  .modal-content .btn-standard {
+    min-height: 44px;
+    padding: 12px 20px;
+    font-size: 0.95em;
+  }
+
+  /* Touch feedback */
+  .btn-standard {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn-standard:active {
+    transform: scale(0.98);
+    transition: transform 0.1s;
+  }
+
+  /* Button spacing */
+  .modal-content .button-container {
+    gap: 0.8em;
+  }
+}
+
+/* Mobile phones - legacy breakpoint */
+@media (max-width: 480px) {
+  .modal-content {
+    width: 98%;
+    padding: 1em;
+  }
+
+  .modal-content h2 {
+    font-size: 1.3em;
+  }
+
+  .close-modal {
+    font-size: 20px;
+  }
+}
+
+/* ================================================
+   ACCESSIBILITY
+   ================================================ */
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .modal-content {
+    animation: none;
+  }
+
+  .close-modal {
+    transition: none;
+  }
+}
+
+/* Focus styles for keyboard navigation */
+.modal-content button:focus,
+.modal-content a:focus,
+.close-modal:focus {
+  outline: 2px solid #ffee00;
+  outline-offset: 2px;
+}
+
+/* ================================================
+   MODAL BUTTON GROUPS
+   ================================================ */
+
+/* Button container inside modals */
+.modal-content .tos-modal-buttons,
+.modal-content > div[style*="display: flex"] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  margin-top: 1.5em;
+}
+
+/* Auth modal button container - See docs/modal-style-audit.md */
+.auth-modal-actions {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 0.8em !important; /* Space between buttons */
+  margin-top: 1.5em;
+  width: 100%;
+}
+
+/* Remove any margin from buttons inside auth-modal-actions */
+.auth-modal-actions .auth-modal-btn {
+  margin: 0 !important;
+}
+
+/* Override any margins from btn-google, btn-facebook, btn-secondary classes */
+.auth-modal-actions .btn-google,
+.auth-modal-actions .btn-facebook,
+.auth-modal-actions .btn-secondary {
+  margin: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Auth modal buttons - Pill-shaped, equal sizing */
+.auth-modal-btn {
+  width: 300px !important;
+  max-width: 90%;
+  border-radius: 999px !important; /* Pill shape (fully rounded) */
+  padding: 0.85em 2em !important;
+  font-size: 1em !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+/* Ensure Cancel button matches other buttons exactly */
+.auth-modal-btn.btn-secondary {
+  width: 300px !important;
+  padding: 0.85em 2em !important;
+  font-size: 1em !important;
+}
+
+/* Icon sizing within buttons */
+.auth-modal-btn i {
+  flex-shrink: 0;
+  font-size: 1.1em;
+}
+
+/* Mobile responsive buttons */
+@media (max-width: 480px) {
+  .auth-modal-btn {
+    width: 100% !important;
+    max-width: 300px;
+    padding: 0.8em 1.5em !important;
+    font-size: 0.95em !important;
+  }
+
+  /* Cancel button mobile sizing */
+  .auth-modal-btn.btn-secondary {
+    width: 100% !important;
+    padding: 0.8em 1.5em !important;
+    font-size: 0.95em !important;
+  }
+}
+
+/* ================================================
+   Z-INDEX HIERARCHY
+   ================================================ */
+
+/* Ensure modals are above profile hub */
+.modal {
+  z-index: 10001 !important;
+}
+
+/* Ensure modal content is above backdrop */
+.modal-content {
+  z-index: 10002;
+}
+
+/* ================================================
+   LEGACY OVERRIDE
+   ================================================ */
+
+/* Override old positioning methods */
+.modal-content[style*="top: 50%"] {
+  top: auto !important;
+  transform: none !important;
+  animation: slideDown 0.3s ease !important;
+}
+
+/* REMOVED: Problematic .modal[style] rule that prevented closing
+   See docs/modal-cancel-issue.md for details */
+
+/* ================================================
+   PRINT STYLES
+   ================================================ */
+
+@media print {
+  .modal {
+    display: none !important;
+  }
+}

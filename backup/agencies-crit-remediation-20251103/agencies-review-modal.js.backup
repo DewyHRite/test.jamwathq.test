@@ -1,0 +1,688 @@
+/**
+ * JamWatHQ Agencies Review Modal - JavaScript Behavior
+ * Handles modal open/close, form population, and submission
+ * See docs/agencies-review-modal.md for documentation
+ * Date: 2025-11-01
+ *
+ * IMPORTANT: This file follows CLAUDE.md best practices
+ * - No inline scripts allowed
+ * - All event handlers externalized
+ * - Proper focus management for accessibility
+ */
+
+(function() {
+  'use strict';
+
+  // Modal state
+  let currentAgencyId = null;
+  let currentAgencyName = null;
+
+  /**
+   * Initialize modal system
+   * Called on DOMContentLoaded
+   */
+  function initAgenciesReviewModal() {
+    console.log('✅ Agencies Review Modal initialized');
+
+    // Attach event listeners to all "Leave a Review" buttons
+    attachReviewButtonListeners();
+
+    // Attach close modal listeners
+    attachCloseModalListeners();
+
+    // Close modal on background click
+    attachBackgroundClickListener();
+
+    // Close modal on Escape key
+    attachEscapeKeyListener();
+  }
+
+  /**
+   * Attach click listeners to all "Leave a Review" buttons
+   */
+  function attachReviewButtonListeners() {
+    const reviewButtons = document.querySelectorAll('[data-action="toggle-review"]');
+
+    reviewButtons.forEach(button => {
+      button.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        // Get agency ID from closest agency card
+        const agencyCard = this.closest('.agency-info');
+        if (!agencyCard) {
+          console.error('Could not find agency card');
+          return;
+        }
+
+        // Extract agency ID from form ID or data attribute
+        const form = agencyCard.querySelector('form[id^="reviewForm-"]');
+        if (!form) {
+          console.error('Could not find review form');
+          return;
+        }
+
+        const formId = form.id; // e.g., "reviewForm-10881"
+        const agencyId = formId.replace('reviewForm-', '');
+
+        // Get agency name from heading
+        const agencyHeading = agencyCard.querySelector('header h3');
+        const agencyName = agencyHeading ? agencyHeading.textContent.trim() : 'this agency';
+
+        // Open modal with agency data
+        openReviewModal(agencyId, agencyName);
+      });
+    });
+
+    console.log(`✅ Attached listeners to ${reviewButtons.length} review buttons`);
+  }
+
+  /**
+   * Open the review modal for a specific agency
+   * @param {string} agencyId - The agency identifier
+   * @param {string} agencyName - The agency name for display
+   */
+  function openReviewModal(agencyId, agencyName) {
+    currentAgencyId = agencyId;
+    currentAgencyName = agencyName;
+
+    // Get or create modal
+    let modal = document.getElementById('agenciesReviewModal');
+    if (!modal) {
+      modal = createModalHTML();
+      document.body.appendChild(modal);
+      attachCloseModalListeners();
+    }
+
+    // Update modal title
+    const modalTitle = modal.querySelector('#agenciesModalTitle');
+    if (modalTitle) {
+      modalTitle.textContent = `Submit Your Review for ${agencyName}`;
+    }
+
+    // Update form agency ID
+    const form = modal.querySelector('#agenciesReviewForm');
+    if (form) {
+      // Update form ID to match expected format: reviewForm-{agencyId}
+      form.id = `reviewForm-${agencyId}`;
+      form.dataset.agencyId = agencyId;
+
+      // COMPREHENSIVE FORM RESET - Clear all previous data
+      resetModalForm(form);
+
+      // Update usage frequency field ID to match agency-specific validation
+      const usageFrequencyField = form.querySelector('select[name="usageFrequency"]');
+      if (usageFrequencyField) {
+        usageFrequencyField.id = `usageFrequency-${agencyId}`;
+        // Also update the label to match
+        const label = form.querySelector('label[for="modal-usageFrequency"], label[for^="usageFrequency-"]');
+        if (label) {
+          label.setAttribute('for', `usageFrequency-${agencyId}`);
+        }
+      }
+    }
+
+    // Show modal
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden'; // Prevent background scroll
+
+    // Set focus to first form field for accessibility
+    const firstInput = modal.querySelector('input[type="radio"], select, textarea');
+    if (firstInput) {
+      setTimeout(() => firstInput.focus(), 100);
+    }
+
+    console.log(`✅ Opened review modal for agency: ${agencyId} (${agencyName})`);
+  }
+
+  /**
+   * Reset modal form to blank state
+   * Clears all form fields, star ratings, and visual indicators
+   * @param {HTMLFormElement} form - The form element to reset
+   */
+  function resetModalForm(form) {
+    if (!form) return;
+
+    // Reset standard form fields (textareas, selects, etc.)
+    form.reset();
+
+    // Clear all hidden rating inputs
+    const ratingInputs = form.querySelectorAll('input[type="hidden"]');
+    ratingInputs.forEach(input => {
+      input.value = '';
+    });
+
+    // Reset all star ratings to unselected state
+    const allStars = form.querySelectorAll('.star-rating i');
+    allStars.forEach(star => {
+      star.classList.remove('fas', 'active');
+      star.classList.add('far');
+    });
+
+    // Reset dropdown to default placeholder
+    const usageFrequency = form.querySelector('select[name="usageFrequency"]');
+    if (usageFrequency) {
+      usageFrequency.selectedIndex = 0; // Select first option (placeholder)
+    }
+
+    // Clear textarea
+    const commentsField = form.querySelector('textarea[name="comments"]');
+    if (commentsField) {
+      commentsField.value = '';
+    }
+
+    // Remove any error styling
+    const allFields = form.querySelectorAll('input, textarea, select');
+    allFields.forEach(field => {
+      field.style.borderColor = '';
+    });
+
+    console.log('✅ Modal form reset to blank state');
+  }
+
+  /**
+   * Close the review modal
+   */
+  function closeReviewModal() {
+    const modal = document.getElementById('agenciesReviewModal');
+    if (modal) {
+      modal.classList.remove('show');
+      document.body.style.overflow = ''; // Restore scroll
+
+      // Reset form comprehensively (use querySelector since form ID changes dynamically)
+      const form = modal.querySelector('form');
+      if (form) {
+        // Use comprehensive reset to clear all fields and visual indicators
+        resetModalForm(form);
+
+        // Reset form ID back to default
+        form.id = 'agenciesReviewForm';
+      }
+
+      // Reset usage frequency field ID back to default
+      const usageFrequencyField = modal.querySelector('select[name="usageFrequency"]');
+      if (usageFrequencyField) {
+        usageFrequencyField.id = 'modal-usageFrequency';
+        const label = modal.querySelector('label[for^="usageFrequency-"]');
+        if (label) {
+          label.setAttribute('for', 'modal-usageFrequency');
+        }
+      }
+
+      console.log('✅ Closed review modal');
+    }
+
+    currentAgencyId = null;
+    currentAgencyName = null;
+  }
+
+  /**
+   * Attach close modal listeners (close button and background click)
+   */
+  function attachCloseModalListeners() {
+    const modal = document.getElementById('agenciesReviewModal');
+    if (!modal) return;
+
+    // Close button (X icon)
+    const closeButton = modal.querySelector('.close-modal');
+    if (closeButton) {
+      // Add both click and touchend for mobile compatibility
+      closeButton.addEventListener('click', closeReviewModal);
+      closeButton.addEventListener('touchend', function(e) {
+        e.preventDefault(); // Prevent double-firing on mobile
+        closeReviewModal();
+      });
+    }
+
+    // Cancel button (button with data-action="close-agencies-review-modal")
+    const cancelButton = modal.querySelector('button[data-action="close-agencies-review-modal"]');
+    if (cancelButton) {
+      cancelButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        closeReviewModal();
+      });
+    }
+  }
+
+  /**
+   * Attach background click listener to close modal
+   */
+  function attachBackgroundClickListener() {
+    const modal = document.getElementById('agenciesReviewModal');
+    if (!modal) return;
+
+    modal.addEventListener('click', function(event) {
+      // Close if clicking on the background (not modal content)
+      if (event.target === modal) {
+        closeReviewModal();
+      }
+    });
+  }
+
+  /**
+   * Attach Escape key listener to close modal
+   */
+  function attachEscapeKeyListener() {
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        const modal = document.getElementById('agenciesReviewModal');
+        if (modal && modal.classList.contains('show')) {
+          closeReviewModal();
+        }
+      }
+    });
+  }
+
+  /**
+   * Create modal HTML structure
+   * Returns a complete modal DOM element
+   */
+  function createModalHTML() {
+    const modal = document.createElement('div');
+    modal.id = 'agenciesReviewModal';
+    modal.className = 'agencies-review-modal';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-labelledby', 'agenciesModalTitle');
+    modal.setAttribute('aria-modal', 'true');
+
+    modal.innerHTML = `
+      <div class="modal-content">
+        <span class="close-modal" data-action="close-agencies-review-modal" aria-label="Close review modal">&times;</span>
+        <h2 id="agenciesModalTitle">Submit Your Review</h2>
+
+        <form class="review-form" id="agenciesReviewForm">
+          <!-- Application Process -->
+          <div class="form-group">
+            <label>Application Process: How smooth and transparent was the process of applying for placements? *</label>
+            <div class="star-rating" id="applicationProcessRating">
+              <i class="far fa-star" data-rating="1" onclick="setApplicationProcessRating(1)"></i>
+              <i class="far fa-star" data-rating="2" onclick="setApplicationProcessRating(2)"></i>
+              <i class="far fa-star" data-rating="3" onclick="setApplicationProcessRating(3)"></i>
+              <i class="far fa-star" data-rating="4" onclick="setApplicationProcessRating(4)"></i>
+              <i class="far fa-star" data-rating="5" onclick="setApplicationProcessRating(5)"></i>
+            </div>
+            <input type="hidden" id="applicationProcess" name="applicationProcess" required>
+          </div>
+
+          <!-- Customer Service -->
+          <div class="form-group">
+            <label>Customer Service: Were inquiries handled efficiently and professionally? *</label>
+            <div class="star-rating" id="customerServiceRating">
+              <i class="far fa-star" data-rating="1" onclick="setCustomerServiceRating(1)"></i>
+              <i class="far fa-star" data-rating="2" onclick="setCustomerServiceRating(2)"></i>
+              <i class="far fa-star" data-rating="3" onclick="setCustomerServiceRating(3)"></i>
+              <i class="far fa-star" data-rating="4" onclick="setCustomerServiceRating(4)"></i>
+              <i class="far fa-star" data-rating="5" onclick="setCustomerServiceRating(5)"></i>
+            </div>
+            <input type="hidden" id="customerService" name="customerService" required>
+          </div>
+
+          <!-- Communication -->
+          <div class="form-group">
+            <label>Communication: Are the placements aligned with expectations and qualifications? *</label>
+            <div class="star-rating" id="communicationRating">
+              <i class="far fa-star" data-rating="1" onclick="setCommunicationRating(1)"></i>
+              <i class="far fa-star" data-rating="2" onclick="setCommunicationRating(2)"></i>
+              <i class="far fa-star" data-rating="3" onclick="setCommunicationRating(3)"></i>
+              <i class="far fa-star" data-rating="4" onclick="setCommunicationRating(4)"></i>
+              <i class="far fa-star" data-rating="5" onclick="setCommunicationRating(5)"></i>
+            </div>
+            <input type="hidden" id="communication" name="communication" required>
+          </div>
+
+          <!-- Support Services -->
+          <div class="form-group">
+            <label>Support Services: How well does the agency assist users before, during, and after placements? *</label>
+            <div class="star-rating" id="supportServicesRating">
+              <i class="far fa-star" data-rating="1" onclick="setSupportServicesRating(1)"></i>
+              <i class="far fa-star" data-rating="2" onclick="setSupportServicesRating(2)"></i>
+              <i class="far fa-star" data-rating="3" onclick="setSupportServicesRating(3)"></i>
+              <i class="far fa-star" data-rating="4" onclick="setSupportServicesRating(4)"></i>
+              <i class="far fa-star" data-rating="5" onclick="setSupportServicesRating(5)"></i>
+            </div>
+            <input type="hidden" id="supportServices" name="supportServices" required>
+          </div>
+
+          <!-- Overall Experience -->
+          <div class="form-group">
+            <label>Overall Experience: Would you recommend this agency to others? *</label>
+            <div class="star-rating" id="overallExperienceRating">
+              <i class="far fa-star" data-rating="1" onclick="setOverallExperienceRating(1)"></i>
+              <i class="far fa-star" data-rating="2" onclick="setOverallExperienceRating(2)"></i>
+              <i class="far fa-star" data-rating="3" onclick="setOverallExperienceRating(3)"></i>
+              <i class="far fa-star" data-rating="4" onclick="setOverallExperienceRating(4)"></i>
+              <i class="far fa-star" data-rating="5" onclick="setOverallExperienceRating(5)"></i>
+            </div>
+            <input type="hidden" id="overallExperience" name="overallExperience" required>
+          </div>
+
+          <!-- Usage Frequency -->
+          <div class="usage-frequency-group">
+            <label for="modal-usageFrequency">
+              How many times have you used this agency? *
+            </label>
+            <select id="modal-usageFrequency" name="usageFrequency" required>
+              <option value="" disabled selected>Please select...</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5+</option>
+            </select>
+          </div>
+
+          <!-- Comments -->
+          <div class="form-group">
+            <label for="comments">Comments: *</label>
+            <textarea
+              id="comments"
+              name="comments"
+              required
+              placeholder="Write your review here..."
+              rows="4"
+            ></textarea>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="form-actions">
+            <button type="submit" class="btn-standard btn-primary">Submit Review</button>
+            <button type="button" class="btn-standard btn-secondary" data-action="close-agencies-review-modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    `;
+
+    // Attach form submit listener
+    const form = modal.querySelector('#agenciesReviewForm');
+    if (form) {
+      form.addEventListener('submit', handleFormSubmit);
+    }
+
+    // Star ratings handled by CSS (direction: rtl + sibling selectors)
+    // No JavaScript needed - matches agencies.html behavior
+
+    return modal;
+  }
+
+  /**
+   * Handle form submission
+   * @param {Event} event - The submit event
+   */
+  function handleFormSubmit(event) {
+    event.preventDefault();
+
+    const form = event.target;
+    const agencyId = form.dataset.agencyId;
+
+    if (!agencyId) {
+      console.error('No agency ID found for submission');
+      alert('Error: Agency information not found. Please try again.');
+      return;
+    }
+
+    // Collect form data
+    const formData = {
+      agencyId: agencyId,
+      applicationProcess: form.applicationProcess.value,
+      customerService: form.customerService.value,
+      communication: form.communication.value,
+      supportServices: form.supportServices.value,
+      overallExperience: form.overallExperience.value,
+      usageFrequency: form.usageFrequency.value,
+      comments: form.comments.value
+    };
+
+    // Frontend validation before submission
+    if (!validateFormData(formData, form)) {
+      return; // Validation failed, stop submission
+    }
+
+    console.log('📝 Form data collected and validated:', formData);
+
+    // Submit using the modal's submission flow
+    submitAgencyReviewFromModal(formData, agencyId);
+  }
+
+  /**
+   * Validate form data before submission
+   * @param {Object} formData - The form data to validate
+   * @param {HTMLFormElement} form - The form element for showing errors
+   * @returns {boolean} - True if valid, false otherwise
+   */
+  function validateFormData(formData, form) {
+    // Validate all star ratings are provided
+    const ratings = ['applicationProcess', 'customerService', 'communication', 'supportServices', 'overallExperience'];
+    for (const rating of ratings) {
+      if (!formData[rating] || formData[rating] < 1 || formData[rating] > 5) {
+        alert('Please provide ratings for all categories (1-5 stars).');
+        return false;
+      }
+    }
+
+    // Validate usage frequency
+    if (!formData.usageFrequency || formData.usageFrequency < 1 || formData.usageFrequency > 5) {
+      alert('Please select how many times you have used this agency.');
+      return false;
+    }
+
+    // Validate comments minimum length (20 characters)
+    const comments = formData.comments.trim();
+    if (comments.length < 20) {
+      alert('Comments must be at least 20 characters. Please provide more detail about your experience.');
+
+      // Highlight the comments field
+      const commentsField = form.querySelector('#comments, textarea[name="comments"]');
+      if (commentsField) {
+        commentsField.focus();
+        commentsField.style.borderColor = '#ff0000';
+        setTimeout(() => {
+          commentsField.style.borderColor = '';
+        }, 3000);
+      }
+
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * Submit agency review from modal (with TOS and authManager)
+   * @param {Object} formData - The review data from modal
+   * @param {string} agencyId - The agency ID
+   */
+  async function submitAgencyReviewFromModal(formData, agencyId) {
+    console.log('📤 Submitting agency review from modal:', formData);
+
+    // Add agency name from page
+    const agencyNameElement = document.querySelector(`#wrapper-${agencyId} h3`);
+    formData.agencyName = agencyNameElement ? agencyNameElement.textContent.trim() : agencyId;
+
+    // Add TOS acceptance
+    formData.tosAccepted = true;
+
+    try {
+      // Use authManager for submission (handles authentication)
+      if (window.authManager && typeof window.authManager.submitAgencyReview === 'function') {
+        const result = await window.authManager.submitAgencyReview(formData);
+
+        if (result && result.success) {
+          console.log('✅ Review submitted successfully:', result);
+          alert('Thank you for your review! Your feedback helps the community.');
+          closeReviewModal();
+
+          // Reload reviews for this agency
+          setTimeout(() => {
+            if (typeof togglePastReviews === 'function') {
+              togglePastReviews(agencyId);
+            }
+          }, 500);
+        } else {
+          throw new Error(result?.message || 'Failed to submit review');
+        }
+      } else {
+        // Fallback: direct fetch if authManager not available
+        const response = await fetch('/api/agency-reviews', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+          body: JSON.stringify(formData)
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('✅ Review submitted successfully:', data);
+        alert('Thank you for your review! Your feedback helps the community.');
+        closeReviewModal();
+
+        // Reload reviews
+        setTimeout(() => {
+          if (typeof togglePastReviews === 'function') {
+            togglePastReviews(agencyId);
+          }
+        }, 500);
+      }
+    } catch (error) {
+      console.error('❌ Error submitting review:', error);
+      alert(`Failed to submit your review: ${error.message}\n\nPlease try again or contact support.`);
+    }
+  }
+
+  /**
+   * Submit agency review to backend (legacy function - not used by modal)
+   * @param {Object} formData - The review data
+   */
+  function submitAgencyReview(formData) {
+    console.log('📤 Submitting agency review:', formData);
+
+    // TODO: Replace with actual API call
+    // This should match the backend route: POST /api/agency-reviews
+
+    fetch('/api/agency-reviews', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include', // Include session cookies
+      body: JSON.stringify(formData)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('✅ Review submitted successfully:', data);
+      alert('Thank you for your review! It has been submitted successfully.');
+
+      // Optionally refresh agency ratings
+      if (typeof loadAgencyReviews === 'function') {
+        loadAgencyReviews(formData.agencyId);
+      }
+    })
+    .catch(error => {
+      console.error('❌ Error submitting review:', error);
+      alert('There was an error submitting your review. Please try again.');
+    });
+  }
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAgenciesReviewModal);
+  } else {
+    initAgenciesReviewModal();
+  }
+
+  /**
+   * Star rating functions (global scope for onclick handlers)
+   * Each category has its own setRating function
+   */
+
+  // Application Process Rating
+  window.setApplicationProcessRating = function(rating) {
+    document.getElementById('applicationProcess').value = rating;
+    const stars = document.querySelectorAll('#applicationProcessRating i');
+    stars.forEach((star, index) => {
+      if (index < rating) {
+        star.classList.remove('far');
+        star.classList.add('fas', 'active');
+      } else {
+        star.classList.remove('fas', 'active');
+        star.classList.add('far');
+      }
+    });
+  };
+
+  // Customer Service Rating
+  window.setCustomerServiceRating = function(rating) {
+    document.getElementById('customerService').value = rating;
+    const stars = document.querySelectorAll('#customerServiceRating i');
+    stars.forEach((star, index) => {
+      if (index < rating) {
+        star.classList.remove('far');
+        star.classList.add('fas', 'active');
+      } else {
+        star.classList.remove('fas', 'active');
+        star.classList.add('far');
+      }
+    });
+  };
+
+  // Communication Rating
+  window.setCommunicationRating = function(rating) {
+    document.getElementById('communication').value = rating;
+    const stars = document.querySelectorAll('#communicationRating i');
+    stars.forEach((star, index) => {
+      if (index < rating) {
+        star.classList.remove('far');
+        star.classList.add('fas', 'active');
+      } else {
+        star.classList.remove('fas', 'active');
+        star.classList.add('far');
+      }
+    });
+  };
+
+  // Support Services Rating
+  window.setSupportServicesRating = function(rating) {
+    document.getElementById('supportServices').value = rating;
+    const stars = document.querySelectorAll('#supportServicesRating i');
+    stars.forEach((star, index) => {
+      if (index < rating) {
+        star.classList.remove('far');
+        star.classList.add('fas', 'active');
+      } else {
+        star.classList.remove('fas', 'active');
+        star.classList.add('far');
+      }
+    });
+  };
+
+  // Overall Experience Rating
+  window.setOverallExperienceRating = function(rating) {
+    document.getElementById('overallExperience').value = rating;
+    const stars = document.querySelectorAll('#overallExperienceRating i');
+    stars.forEach((star, index) => {
+      if (index < rating) {
+        star.classList.remove('far');
+        star.classList.add('fas', 'active');
+      } else {
+        star.classList.remove('fas', 'active');
+        star.classList.add('far');
+      }
+    });
+  };
+
+  // Expose functions to global scope if needed for testing
+  window.AgenciesReviewModal = {
+    open: openReviewModal,
+    close: closeReviewModal
+  };
+
+})();

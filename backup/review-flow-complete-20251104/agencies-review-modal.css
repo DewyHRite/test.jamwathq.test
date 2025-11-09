@@ -1,0 +1,484 @@
+/**
+ * JamWatHQ Agencies Review Modal - External CSS
+ * Replicates Share Experience modal structure and styling
+ * See docs/agencies-review-modal.md for documentation
+ * Date: 2025-11-01
+ *
+ * IMPORTANT: This file follows CLAUDE.md best practices
+ * - No inline styles allowed
+ * - All modal logic externalized
+ * - CSP compliant (style-src 'self')
+ */
+
+/* ================================================
+   HIDE OLD INLINE REVIEW SECTIONS
+   Reviews now use modal popup only
+   ================================================ */
+
+.agency-info .review-section {
+  display: none !important;
+}
+
+/* ================================================
+   MODAL OVERLAY
+   Full-screen overlay with backdrop blur
+   ================================================ */
+
+.agencies-review-modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+/* Show state - activated via JavaScript */
+.agencies-review-modal.show {
+  display: block !important;
+}
+
+/* ================================================
+   MODAL CONTENT CONTAINER
+   600px max-width, centered, with animation
+   ================================================ */
+
+.agencies-review-modal .modal-content {
+  background-color: #000000;
+  border: 3px solid #ffee00;
+  border-radius: 10px;
+  margin: 5% auto;
+  padding: 2em;
+  width: 90%;
+  max-width: 600px;
+  position: relative;
+  z-index: 2001; /* Above modal overlay */
+  animation: slideDown 0.3s ease;
+  box-shadow: 0 10px 40px rgba(255, 238, 0, 0.4);
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ================================================
+   CLOSE BUTTON
+   Top-right corner, yellow, hover green
+   ================================================ */
+
+.agencies-review-modal .close-modal {
+  color: #ffee00;
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  line-height: 1;
+  padding: 0.5em; /* Add padding for better touch target */
+  min-width: 44px; /* Minimum touch target width */
+  min-height: 44px; /* Minimum touch target height */
+  background: none;
+  border: none;
+  z-index: 10; /* Ensure it's above other content */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.agencies-review-modal .close-modal:hover,
+.agencies-review-modal .close-modal:focus {
+  color: #28a745;
+  outline: none;
+}
+
+/* ================================================
+   MODAL TITLE
+   Centered, yellow, prominent
+   ================================================ */
+
+.agencies-review-modal .modal-content h2 {
+  color: #ffee00 !important;
+  margin-top: 0;
+  margin-bottom: 1em;
+  text-align: center !important;
+  font-size: 1.5em;
+}
+
+/* ================================================
+   FORM CONTAINER
+   Flexbox layout with consistent spacing
+   ================================================ */
+
+.agencies-review-modal .review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+/* ================================================
+   FORM GROUPS
+   Individual field containers
+   ================================================ */
+
+.agencies-review-modal .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+/* ================================================
+   FORM LABELS
+   White text for star rating questions, yellow for other fields
+   ================================================ */
+
+.agencies-review-modal .form-group label,
+.agencies-review-modal label {
+  color: #ffffff !important; /* White text for questions */
+  font-weight: bold;
+  font-size: 0.95em;
+  text-align: left !important;
+}
+
+/* Usage frequency label remains yellow */
+.agencies-review-modal .usage-frequency-group label {
+  color: #ffee00 !important;
+}
+
+/* ================================================
+   FORM INPUTS, TEXTAREAS, SELECTS
+   Dark background, yellow border, white text
+   ================================================ */
+
+.agencies-review-modal .form-group input,
+.agencies-review-modal .form-group textarea,
+.agencies-review-modal .form-group select,
+.agencies-review-modal textarea {
+  padding: 0.75em;
+  border: 2px solid #ffee00;
+  background: #1a1a1a !important;
+  color: #ffffff !important;
+  border-radius: 6px;
+  font-size: 0.95em;
+  transition: all 0.3s ease;
+  -webkit-text-fill-color: #ffffff !important;
+  pointer-events: auto !important; /* Ensure inputs are clickable */
+  position: relative;
+  z-index: 1; /* Ensure inputs are above any overlays */
+}
+
+/* Override browser autofill styling */
+.agencies-review-modal .form-group input:-webkit-autofill,
+.agencies-review-modal .form-group input:-webkit-autofill:hover,
+.agencies-review-modal .form-group input:-webkit-autofill:focus,
+.agencies-review-modal .form-group input:-webkit-autofill:active,
+.agencies-review-modal .form-group textarea:-webkit-autofill,
+.agencies-review-modal .form-group select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #1a1a1a inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+  border: 2px solid #ffee00 !important;
+}
+
+/* Focus States */
+.agencies-review-modal .form-group input:focus,
+.agencies-review-modal .form-group textarea:focus,
+.agencies-review-modal .form-group select:focus,
+.agencies-review-modal textarea:focus {
+  outline: none;
+  border-color: #28a745;
+  background: #2a2a2a !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Placeholder text visibility */
+.agencies-review-modal .form-group input::placeholder,
+.agencies-review-modal .form-group textarea::placeholder,
+.agencies-review-modal textarea::placeholder {
+  color: #888888 !important;
+  opacity: 0.8;
+}
+
+/* Ensure select dropdown options are visible */
+.agencies-review-modal .form-group select option {
+  background: #1a1a1a;
+  color: #ffffff;
+}
+
+/* ================================================
+   TEXTAREA
+   Minimum height with vertical resize
+   ================================================ */
+
+.agencies-review-modal .form-group textarea,
+.agencies-review-modal textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Comments Textarea - Specific dimensions */
+.agencies-review-modal textarea[id*="comments-"] {
+  width: 100%;
+  max-width: 600px;
+  height: 120px;
+  min-height: 120px;
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: left;
+  padding: 12px;
+  box-sizing: border-box;
+  resize: vertical;
+  overflow-y: auto;
+}
+
+/* ================================================
+   STAR RATING STYLES
+   Interactive star system using Font Awesome icons
+   Exact match to Share Experience modal
+   ================================================ */
+
+.agencies-review-modal .star-rating {
+  display: flex;
+  flex-direction: row; /* Explicitly set left-to-right order */
+  gap: 0.5em;
+  font-size: 2em;
+  align-self: flex-start; /* Force left alignment within parent flex container */
+  justify-content: flex-start; /* Ensure stars align left within the container */
+  direction: ltr; /* Explicitly set left-to-right text direction */
+}
+
+.agencies-review-modal .star-rating i {
+  color: #333333;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.agencies-review-modal .star-rating i:hover,
+.agencies-review-modal .star-rating i.active {
+  color: #ffee00;
+}
+
+/* ================================================
+   USAGE FREQUENCY SECTION
+   Highlighted mandatory field
+   ================================================ */
+
+.agencies-review-modal .usage-frequency-group {
+  background: rgba(255, 238, 0, 0.08);
+  border-left: 3px solid #ffee00;
+  border-radius: 6px;
+  padding: 1em;
+  margin: 1em 0;
+}
+
+.agencies-review-modal .usage-frequency-group label {
+  display: block;
+  margin-bottom: 0.6em;
+  font-weight: 600;
+  color: #ffee00 !important;
+  font-size: 1em;
+}
+
+.agencies-review-modal .usage-frequency-group select {
+  width: 100%;
+  padding: 0.75em;
+  border: 2px solid #ffee00;
+  background: #1a1a1a;
+  color: #ffffff;
+  border-radius: 6px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.agencies-review-modal .usage-frequency-group select:focus {
+  outline: none;
+  border-color: #28a745;
+  background: #2a2a2a;
+}
+
+/* ================================================
+   SUBMIT BUTTON
+   Uses btn-standard btn-primary from shared-buttons.css
+   ================================================ */
+
+.agencies-review-modal button[type="submit"] {
+  /* Inherits from btn-standard btn-primary */
+  margin-top: 1em;
+  width: 100%;
+  max-width: 300px;
+  align-self: center;
+}
+
+/* ================================================
+   RESPONSIVE DESIGN
+   Mobile and tablet adjustments
+   ================================================ */
+
+/* Tablet */
+@media screen and (max-width: 768px) {
+  .agencies-review-modal .modal-content {
+    width: 95%;
+    margin: 3% auto;
+    padding: 1.5em;
+  }
+
+  .agencies-review-modal .modal-content h2 {
+    font-size: 1.3em;
+  }
+
+  .agencies-review-modal .star-rating {
+    font-size: 1.3em;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 480px) {
+  .agencies-review-modal .modal-content {
+    width: 98%;
+    margin: 2% auto;
+    padding: 1em;
+  }
+
+  .agencies-review-modal .modal-content h2 {
+    font-size: 1.1em;
+  }
+
+  .agencies-review-modal .close-modal {
+    font-size: 24px;
+  }
+
+  .agencies-review-modal .star-rating {
+    font-size: 1.2em;
+    gap: 0.2em;
+  }
+
+  .agencies-review-modal .form-group label,
+  .agencies-review-modal label {
+    font-size: 0.9em;
+  }
+
+  .agencies-review-modal .usage-frequency-group {
+    padding: 0.8em;
+  }
+}
+
+/* ================================================
+   ACCESSIBILITY ENHANCEMENTS
+   WCAG 2.1 AA/AAA compliance
+   ================================================ */
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .agencies-review-modal .modal-content {
+    border-width: 4px;
+  }
+
+  .agencies-review-modal .form-group input,
+  .agencies-review-modal .form-group textarea,
+  .agencies-review-modal .form-group select {
+    border-width: 3px;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .agencies-review-modal .modal-content {
+    animation: none;
+  }
+
+  .agencies-review-modal .close-modal,
+  .agencies-review-modal .form-group input,
+  .agencies-review-modal .form-group textarea,
+  .agencies-review-modal .form-group select,
+  .agencies-review-modal .star-rating label {
+    transition: none;
+  }
+}
+
+/* Focus Visible for Keyboard Navigation */
+.agencies-review-modal .close-modal:focus-visible,
+.agencies-review-modal .form-group input:focus-visible,
+.agencies-review-modal .form-group textarea:focus-visible,
+.agencies-review-modal .form-group select:focus-visible,
+.agencies-review-modal button:focus-visible {
+  outline: 3px solid #ffee00;
+  outline-offset: 2px;
+}
+
+/* ================================================
+   SCROLL BEHAVIOR
+   For modals with many form fields
+   ================================================ */
+
+.agencies-review-modal .modal-content {
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Custom Scrollbar (WebKit browsers) */
+.agencies-review-modal .modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.agencies-review-modal .modal-content::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-radius: 4px;
+}
+
+.agencies-review-modal .modal-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 238, 0, 0.3);
+  border-radius: 4px;
+}
+
+.agencies-review-modal .modal-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 238, 0, 0.5);
+}
+
+/* Firefox Scrollbar */
+.agencies-review-modal .modal-content {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 238, 0, 0.3) #1a1a1a;
+}
+
+/* ================================================
+   FORM ACTIONS (Submit & Cancel Buttons)
+   ================================================ */
+
+.agencies-review-modal .form-actions {
+  display: flex;
+  gap: 1em;
+  margin-top: 1.5em;
+  justify-content: flex-end;
+}
+
+.agencies-review-modal .form-actions button {
+  flex: 0 1 auto;
+  min-width: 120px;
+}
+
+/* Mobile: Stack buttons vertically */
+@media (max-width: 480px) {
+  .agencies-review-modal .form-actions {
+    flex-direction: column-reverse;
+    gap: 0.75em;
+  }
+
+  .agencies-review-modal .form-actions button {
+    width: 100%;
+  }
+}

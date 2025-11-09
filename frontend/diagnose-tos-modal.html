@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOS Modal Diagnostics</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1e1e1e;
+            color: #d4d4d4;
+        }
+        .result {
+            margin: 10px 0;
+            padding: 10px;
+            background: #2d2d2d;
+            border-left: 4px solid #4fc1ff;
+        }
+        .error {
+            border-left-color: #f48771;
+        }
+        .success {
+            border-left-color: #6a9955;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background: #0e639c;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #1177bb;
+        }
+    </style>
+    <!-- TOS Modal CSS (HIGH-005 fix) - CSP-compliant external styles -->
+    <link rel="stylesheet" href="styles/tos-modal.css" />
+</head>
+<body>
+    <h1>🔍 TOS Modal Diagnostics</h1>
+    <div id="results"></div>
+    <button onclick="runDiagnostics()">Run Diagnostics</button>
+    <button onclick="location.reload()">Reload Page</button>
+
+    <script>
+        function log(message, isError = false) {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = isError ? 'result error' : 'result success';
+            div.textContent = message;
+            results.appendChild(div);
+            console.log(message);
+        }
+
+        function runDiagnostics() {
+            document.getElementById('results').innerHTML = '';
+
+            log('=== TOS MODAL DIAGNOSTICS ===');
+
+            // Check if modal exists in DOM
+            const modal = document.getElementById('tos-modal');
+            if (modal) {
+                log('✅ Modal element FOUND in DOM');
+                log(`   Classes: ${modal.className}`);
+                log(`   Parent: ${modal.parentElement.tagName}`);
+            } else {
+                log('❌ Modal element NOT FOUND in DOM', true);
+            }
+
+            // Check if styles exist
+            const styles = document.getElementById('tos-modal-styles');
+            if (styles) {
+                log('✅ Style tag FOUND in DOM');
+                log(`   Location: ${styles.parentElement.tagName}`);
+                log(`   Content length: ${styles.textContent.length} characters`);
+
+                // Check if styles contain key CSS
+                if (styles.textContent.includes('position: fixed')) {
+                    log('✅ Styles contain "position: fixed"');
+                } else {
+                    log('❌ Styles missing "position: fixed"', true);
+                }
+
+                if (styles.textContent.includes('z-index: 10000')) {
+                    log('✅ Styles contain "z-index: 10000"');
+                } else {
+                    log('❌ Styles missing "z-index: 10000"', true);
+                }
+            } else {
+                log('❌ Style tag NOT FOUND in DOM', true);
+                log('   This means styles were NOT injected!', true);
+            }
+
+            // Check computed styles
+            if (modal) {
+                const computed = window.getComputedStyle(modal);
+                log('=== COMPUTED STYLES ===');
+                log(`   position: ${computed.position}`);
+                log(`   display: ${computed.display}`);
+                log(`   z-index: ${computed.zIndex}`);
+                log(`   top: ${computed.top}`);
+                log(`   left: ${computed.left}`);
+                log(`   width: ${computed.width}`);
+                log(`   height: ${computed.height}`);
+
+                if (computed.position !== 'fixed') {
+                    log('❌ PROBLEM: position is not "fixed"!', true);
+                }
+                if (computed.zIndex !== '10000') {
+                    log('⚠️  WARNING: z-index is not 10000', true);
+                }
+            }
+
+            // Check for CSP errors
+            log('=== CHECK CONSOLE FOR CSP ERRORS ===');
+            log('Look for messages about "Content Security Policy"');
+        }
+
+        // Auto-run on load
+        window.addEventListener('load', () => {
+            setTimeout(runDiagnostics, 1000);
+        });
+    </script>
+
+    <!-- Load TOS modal script -->
+    <script src="scripts/tos-modal.js"></script>
+</body>
+</html>

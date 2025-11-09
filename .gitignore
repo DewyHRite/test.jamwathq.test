@@ -1,0 +1,51 @@
+# Domain Zero Protocol - Private Intelligence
+.protocol-state/trigger-19.md
+
+# Snyk Security Extension - AI Rules (auto-generated)
+.github\instructions\snyk_rules.instructions.md
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment Variables & Secrets
+.env
+.env.local
+.env.production
+*.pem
+*.key
+client_secret*.json
+*oauth-credential*.md
+*credential-update*.md
+
+# Logs
+*.log
+npm-debug.log*
+logs/
+
+# OS Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary Files
+temp/
+tmp/
+*.tmp
+_ul*
+%BACKUP_DIR%/
+
+# Database
+*.sqlite
+*.db

@@ -1,0 +1,140 @@
+/**
+ * JamWatHQ Agencies Page - Button Styles
+ * Dedicated styling for buttons on the Agencies page
+ * See docs/agencies-ui.md for documentation
+ * Date: 2025-11-01
+ */
+
+/* ============================================
+   AGENCIES PRIMARY BUTTON
+   JamWatHQ Brand Palette:
+   - Background: Jamaica Green (#009b3a)
+   - Text: White (#ffffff)
+   - Shadow: Jamaica Yellow (#ffee00)
+   Specificity: (0,2,0)
+   ============================================ */
+
+.btn-standard.btn-primary,
+.btn.btn-primary {
+  background: #009b3a;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(255, 238, 0, 0.4);
+  border: none;
+}
+
+.btn-standard.btn-primary:hover,
+.btn-standard.btn-primary:focus,
+.btn.btn-primary:hover,
+.btn.btn-primary:focus {
+  background: #ffee00;
+  box-shadow: 0 8px 20px rgba(255, 238, 0, 0.55);
+  color: #000000;
+  transform: translateY(-2px);
+}
+
+.btn-standard.btn-primary:active,
+.btn.btn-primary:active {
+  background: #006b27;
+  box-shadow: 0 2px 10px rgba(255, 238, 0, 0.35);
+  transform: translateY(0);
+}
+
+.btn-standard.btn-primary:focus-visible,
+.btn.btn-primary:focus-visible {
+  outline: 3px solid #ffee00;
+  outline-offset: 3px;
+}
+
+.btn-standard.btn-primary:disabled,
+.btn-standard.btn-primary[disabled],
+.btn.btn-primary:disabled,
+.btn.btn-primary[disabled] {
+  background: rgba(0, 155, 58, 0.5);
+  color: rgba(255, 255, 255, 0.6);
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   Maintain consistent sizing across devices
+   ============================================ */
+
+@media screen and (max-width: 768px) {
+  .btn-standard.btn-primary,
+  .btn.btn-primary {
+    box-shadow: 0 3px 12px rgba(255, 238, 0, 0.35);
+  }
+
+  .btn-standard.btn-primary:hover,
+  .btn-standard.btn-primary:focus,
+  .btn.btn-primary:hover,
+  .btn.btn-primary:focus {
+    box-shadow: 0 6px 16px rgba(255, 238, 0, 0.45);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .btn-standard.btn-primary,
+  .btn.btn-primary {
+    box-shadow: 0 2px 10px rgba(255, 238, 0, 0.3);
+  }
+
+  .btn-standard.btn-primary:hover,
+  .btn-standard.btn-primary:focus,
+  .btn.btn-primary:hover,
+  .btn.btn-primary:focus {
+    box-shadow: 0 4px 14px rgba(255, 238, 0, 0.4);
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY ENHANCEMENTS
+   Ensure buttons meet WCAG 2.1 AA/AAA standards
+   ============================================ */
+
+.btn-standard.btn-primary,
+.btn.btn-primary {
+  /* Minimum touch target: 44px × 44px */
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .btn-standard.btn-primary,
+  .btn.btn-primary {
+    background: #00802f;
+    border: 2px solid #ffee00;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .btn-standard.btn-primary,
+  .btn-standard.btn-primary:hover,
+  .btn-standard.btn-primary:focus,
+  .btn-standard.btn-primary:active,
+  .btn.btn-primary,
+  .btn.btn-primary:hover,
+  .btn.btn-primary:focus,
+  .btn.btn-primary:active {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* ============================================
+   VIEW PAST REVIEWS BUTTON
+   Yellow background with black text on hover
+   ============================================ */
+
+.view-past-reviews-btn-semi:hover,
+.view-past-reviews-btn-semi:focus,
+.view-past-reviews-btn-semi.btn-standard:hover,
+.view-past-reviews-btn-semi.btn-standard:focus {
+  background: #ffee00 !important;
+  color: #000000 !important;
+  box-shadow: 0 8px 20px rgba(255, 238, 0, 0.55);
+}

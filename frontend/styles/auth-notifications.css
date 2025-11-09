@@ -1,0 +1,59 @@
+/**
+ * Authentication Notification Styles
+ * Extracted from auth-client.js for CSP compliance
+ * See CLAUDE.md - Security & Design Best Practices Mandate
+ * Date: 2025-10-31
+ */
+
+/* Notification animations */
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+}
+
+/* Notification toast styling */
+.auth-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 8px;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 10000;
+    font-weight: bold;
+    animation: slideIn 0.3s ease;
+}
+
+.auth-notification.success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+.auth-notification.error {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+}
+
+.auth-notification.info {
+    background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+}
+
+.auth-notification.slide-out {
+    animation: slideOut 0.3s ease;
+}

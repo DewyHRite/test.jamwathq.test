@@ -1,0 +1,40 @@
+# DOMAIN ZERO: THE INFINITE PROTOCOL (Index)
+
+This Domain Zero index points to the live, canonical protocol document used by the project.
+
+- **Canonical protocol**: [domain_zero/CLAUDE.md](domain_zero/CLAUDE.md)
+- **Purpose**: Single source of truth for all AI operational protocols
+- **Location**: `C:\Users\Dewy\OneDrive\Documents\JamWatHQ\Full Codebase\domain_zero\CLAUDE.md`
+
+## Quick Navigation
+
+The full protocol includes:
+- Current State Indicator, Roles, and Modes → see `domain_zero/CLAUDE.md`
+- **Backup & Rollback Protocol (MANDATORY)** → see `domain_zero/CLAUDE.md` Section 4
+- Trigger 19 system and Gojo Protocol → see `domain_zero/CLAUDE.md`
+- Session continuity and checklists → see `domain_zero/CLAUDE.md`
+- Dual Workflow and Isolation Boundaries → see `domain_zero/CLAUDE.md`
+
+## Maintenance Note
+
+- **All edits** to the protocol must be made in `domain_zero/CLAUDE.md`
+- This index file should remain a lightweight pointer
+- The `docs/CLAUDE.md` is a reference copy only
+
+## Verification
+
+```bash
+# Default check (accepts this index pattern)
+npm run verify:claude
+
+# Strict check (requires byte-for-byte identical content)
+npm run verify:claude:strict
+```
+
+## Recent Updates
+
+**Version 2.0 (2025-11-04)**:
+- ✅ Added mandatory backup protocol before all implementations
+- ✅ Added comprehensive rollback procedures
+- ✅ Enforced backup creation in Yuuji/Megumi checklists
+- ✅ Added backup naming conventions and retention policies

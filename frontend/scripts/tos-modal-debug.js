@@ -1,0 +1,676 @@
+/**
+ * JamWatHQ Terms of Service Modal - DEBUG VERSION
+ * Added comprehensive console logging to track execution
+ * Date: 2025-11-03
+ * Yuuji: Let's find out exactly what's happening!
+ */
+
+'use strict';
+
+(function(window, document) {
+    console.log('%c[TOS Modal] Script loaded and executing!', 'color: #28a745; font-weight: bold;');
+
+    const TOS_STORAGE_KEY = 'jamwathq_tos_accepted';
+    const COOKIES_STORAGE_KEY = 'jamwathq_cookies_acknowledged';
+
+    // Check if user has already accepted ToS
+    function hasAcceptedToS() {
+        try {
+            const acceptance = localStorage.getItem(TOS_STORAGE_KEY);
+            console.log('[TOS Modal] Checking localStorage:', acceptance);
+            return acceptance === 'true';
+        } catch (e) {
+            console.warn('[TOS Modal] localStorage not available:', e);
+            return false;
+        }
+    }
+
+    // Record ToS acceptance
+    function acceptToS() {
+        try {
+            localStorage.setItem(TOS_STORAGE_KEY, 'true');
+            localStorage.setItem(COOKIES_STORAGE_KEY, 'true');
+            localStorage.setItem(TOS_STORAGE_KEY + '_timestamp', new Date().toISOString());
+            console.log('[TOS Modal] ✅ ToS acceptance recorded');
+            return true;
+        } catch (e) {
+            console.error('[TOS Modal] ❌ Failed to record ToS acceptance:', e);
+            return false;
+        }
+    }
+
+    // Create modal HTML
+    function createModal() {
+        console.log('[TOS Modal] Creating modal HTML...');
+        const modal = document.createElement('div');
+        modal.id = 'tos-modal';
+        modal.className = 'tos-modal';
+        modal.setAttribute('role', 'dialog');
+        modal.setAttribute('aria-labelledby', 'tos-modal-title');
+        modal.setAttribute('aria-modal', 'true');
+
+        modal.innerHTML = `
+            <div class="tos-modal-overlay"></div>
+            <div class="tos-modal-content">
+                <div class="tos-modal-header">
+                    <h2 id="tos-modal-title">Welcome to JamWatHQ! 🇯🇲</h2>
+                </div>
+                <div class="tos-modal-body">
+                    <p><strong>Your #1 Jamaican J-1 Visa Info Hub</strong></p>
+                    <p>Before you continue, please review our Terms of Service and Cookie Policy:</p>
+
+                    <div class="tos-summary">
+                        <h3>📋 Quick Summary:</h3>
+                        <ul>
+                            <li><strong>🎓 Educational Project:</strong> We provide J-1 visa information for the Jamaican community</li>
+                            <li><strong>🍪 Cookies:</strong> We use essential cookies for login and security</li>
+                            <li><strong>🔒 Privacy:</strong> Your data is secure and never sold</li>
+                            <li><strong>📢 Ads:</strong> We display native ads to cover hosting costs</li>
+                            <li><strong>⚖️ Disclaimer:</strong> We're not a visa agency or legal advisor</li>
+                        </ul>
+                    </div>
+
+                    <div class="tos-agreement">
+                        <label class="tos-checkbox-label">
+                            <input type="checkbox" id="tos-agree-checkbox" class="tos-checkbox">
+                            <span>I have read and agree to the <a href="tos.html" target="_blank">Terms of Service</a> and <a href="tos.html#section-6" target="_blank">Cookie Policy</a></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="tos-modal-footer">
+                    <button id="tos-decline" class="tos-btn tos-btn-danger">
+                        <i class="fas fa-times"></i> Decline
+                    </button>
+                    <button id="tos-learn-more" class="tos-btn tos-btn-secondary">
+                        <i class="fas fa-book-open"></i> Learn More
+                    </button>
+                    <button id="tos-accept" class="tos-btn tos-btn-primary" disabled>
+                        <i class="fas fa-check"></i> Accept & Continue
+                    </button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+        console.log('[TOS Modal] ✅ Modal HTML appended to body');
+        console.log('[TOS Modal] Modal element:', modal);
+        console.log('[TOS Modal] Modal computed style position:', window.getComputedStyle(modal).position);
+        console.log('[TOS Modal] Modal computed style z-index:', window.getComputedStyle(modal).zIndex);
+        console.log('[TOS Modal] Modal computed style display:', window.getComputedStyle(modal).display);
+
+        return modal;
+    }
+
+    // Add modal styles
+    function addStyles() {
+        console.log('[TOS Modal] addStyles() called');
+
+        if (document.getElementById('tos-modal-styles')) {
+            console.log('[TOS Modal] ⚠️ Styles already exist, skipping');
+            return; // Already added
+        }
+
+        const style = document.createElement('style');
+        style.id = 'tos-modal-styles';
+        style.textContent = `
+            .tos-modal {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                animation: tosModalFadeIn 0.3s ease-out;
+            }
+
+            @keyframes tosModalFadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            .tos-modal-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                backdrop-filter: blur(4px);
+            }
+
+            .tos-modal-content {
+                position: relative;
+                background: #ffffff;
+                border-radius: 12px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+                max-width: 600px;
+                width: 90%;
+                max-height: 90vh;
+                display: flex;
+                flex-direction: column;
+                animation: tosModalSlideUp 0.3s ease-out;
+                border: 3px solid #ffee00;
+            }
+
+            @keyframes tosModalSlideUp {
+                from {
+                    transform: translateY(50px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            .tos-modal-header {
+                padding: 1.5em;
+                border-bottom: 2px solid #ffee00;
+                background: linear-gradient(135deg, #ffee00 0%, #fff700 100%);
+            }
+
+            .tos-modal-header h2 {
+                margin: 0;
+                color: #000;
+                font-size: 1.5em;
+                font-weight: bold;
+            }
+
+            .tos-modal-body {
+                padding: 1.5em;
+                overflow-y: auto;
+                flex: 1;
+                color: #333;
+            }
+
+            .tos-modal-body p {
+                margin: 0 0 1em 0;
+                line-height: 1.6;
+            }
+
+            .tos-summary {
+                background: #f9f9f9;
+                border-left: 4px solid #28a745;
+                padding: 1em;
+                margin: 1em 0;
+                border-radius: 4px;
+            }
+
+            .tos-summary h3 {
+                margin-top: 0;
+                color: #28a745;
+                font-size: 1.1em;
+            }
+
+            .tos-summary ul {
+                margin: 0.5em 0 0 0;
+                padding-left: 1.5em;
+            }
+
+            .tos-summary li {
+                margin: 0.5em 0;
+                line-height: 1.6;
+            }
+
+            .tos-agreement {
+                margin: 1.5em 0;
+                padding: 1em;
+                background: #fff9e6;
+                border: 2px solid #ffee00;
+                border-radius: 8px;
+            }
+
+            .tos-modal .tos-checkbox-label,
+            .tos-modal-content .tos-checkbox-label {
+                display: flex;
+                align-items: flex-start;
+                cursor: pointer;
+                user-select: none;
+                position: relative;
+            }
+
+            /* Custom checkbox styling for better visibility */
+            .tos-modal .tos-checkbox,
+            .tos-modal-content .tos-checkbox {
+                position: relative;
+                margin: 0.2em 0.5em 0 0;
+                cursor: pointer;
+                width: 24px;
+                height: 24px;
+                min-width: 24px; /* Prevent shrinking */
+                min-height: 24px;
+                flex-shrink: 0;
+                appearance: none; /* Remove default styling */
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                background: #ffffff !important;
+                border: 2.5px solid #28a745 !important;
+                border-radius: 4px;
+                outline: none;
+                transition: all 0.2s ease;
+            }
+
+            /* Hover state for checkbox */
+            .tos-modal .tos-checkbox:hover,
+            .tos-modal-content .tos-checkbox:hover {
+                border-color: #218838 !important;
+                background: #f0fff4 !important;
+                transform: scale(1.05);
+            }
+
+            /* Focus state for accessibility */
+            .tos-modal .tos-checkbox:focus,
+            .tos-modal-content .tos-checkbox:focus {
+                box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+                border-color: #28a745 !important;
+            }
+
+            /* Checked state - adds visible checkmark */
+            .tos-modal .tos-checkbox:checked,
+            .tos-modal-content .tos-checkbox:checked {
+                background: #28a745 !important;
+                border-color: #28a745 !important;
+            }
+
+            /* Custom checkmark using CSS (visible when checked) */
+            .tos-modal .tos-checkbox:checked::after,
+            .tos-modal-content .tos-checkbox:checked::after {
+                content: '';
+                position: absolute;
+                left: 7px;
+                top: 3px;
+                width: 6px;
+                height: 11px;
+                border: solid #ffffff;
+                border-width: 0 3px 3px 0;
+                transform: rotate(45deg);
+                display: block;
+            }
+
+            /* Disabled state */
+            .tos-modal .tos-checkbox:disabled,
+            .tos-modal-content .tos-checkbox:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+
+            .tos-modal .tos-checkbox-label span,
+            .tos-modal-content .tos-checkbox-label span {
+                line-height: 1.6;
+                color: #2d3748 !important; /* Dark gray text - consistent across all pages */
+            }
+
+            .tos-modal .tos-checkbox-label a,
+            .tos-modal-content .tos-checkbox-label a {
+                color: #28a745 !important;
+                text-decoration: none;
+                border-bottom: 1px dotted #28a745;
+                font-weight: bold;
+            }
+
+            .tos-modal .tos-checkbox-label a:hover,
+            .tos-modal-content .tos-checkbox-label a:hover {
+                color: #ffee00 !important;
+                border-bottom-color: #ffee00;
+            }
+
+            .tos-modal-footer {
+                padding: 1em 1.5em;
+                border-top: 1px solid #ddd;
+                display: flex;
+                gap: 1em;
+                justify-content: flex-end;
+                align-items: center;
+                background: #f5f5f5;
+            }
+
+            /* Fallback for browsers without gap support */
+            .tos-modal-footer > * + * {
+                margin-left: 1em;
+            }
+
+            @supports (gap: 1em) {
+                .tos-modal-footer > * + * {
+                    margin-left: 0;
+                }
+            }
+
+            /* Button base styles - responsive text handling */
+            .tos-modal .tos-btn,
+            .tos-modal-content .tos-btn {
+                padding: 10px 14px !important;
+                border: none !important;
+                border-radius: 6px !important;
+                font-size: 14px !important;
+                font-weight: 600 !important;
+                cursor: pointer !important;
+                transition: all 0.2s ease !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 4px !important;
+                text-align: center !important;
+                line-height: 1.2 !important;
+                min-width: 0 !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+            }
+
+            /* Icon sizing in buttons */
+            .tos-modal .tos-btn i,
+            .tos-modal-content .tos-btn i {
+                flex-shrink: 0 !important;
+                font-size: 13px !important;
+            }
+
+            .tos-modal .tos-btn:focus,
+            .tos-modal-content .tos-btn:focus {
+                outline: 2px solid #28a745 !important;
+                outline-offset: 2px !important;
+            }
+
+            .tos-modal .tos-btn-primary,
+            .tos-modal-content .tos-btn-primary {
+                background: #28a745 !important;
+                color: #fff !important;
+            }
+
+            .tos-modal .tos-btn-primary:not(:disabled):hover,
+            .tos-modal-content .tos-btn-primary:not(:disabled):hover {
+                background: #218838 !important;
+                transform: translateY(-2px) !important;
+                box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3) !important;
+            }
+
+            .tos-modal .tos-btn-primary:disabled,
+            .tos-modal-content .tos-btn-primary:disabled {
+                background: #ccc !important;
+                color: #888 !important;
+                cursor: not-allowed !important;
+                opacity: 0.6 !important;
+            }
+
+            .tos-modal .tos-btn-secondary,
+            .tos-modal-content .tos-btn-secondary {
+                background: #ffee00 !important;
+                color: #000 !important;
+                border: 2px solid #ffee00 !important;
+            }
+
+            .tos-modal .tos-btn-secondary:hover,
+            .tos-modal-content .tos-btn-secondary:hover {
+                background: #fff700 !important;
+                border-color: #fff700 !important;
+                transform: translateY(-2px) !important;
+                box-shadow: 0 4px 12px rgba(255, 238, 0, 0.4) !important;
+            }
+
+            .tos-modal .tos-btn-danger,
+            .tos-modal-content .tos-btn-danger {
+                background: #dc3545 !important;
+                color: #fff !important;
+                border: 2px solid #dc3545 !important;
+            }
+
+            .tos-modal .tos-btn-danger:hover,
+            .tos-modal-content .tos-btn-danger:hover {
+                background: #c82333 !important;
+                border-color: #bd2130 !important;
+                transform: translateY(-2px) !important;
+                box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4) !important;
+            }
+
+            /* Mobile responsive */
+            @media (max-width: 768px) {
+                .tos-modal-content {
+                    width: 95%;
+                    max-height: 95vh;
+                }
+
+                .tos-modal-header,
+                .tos-modal-body,
+                .tos-modal-footer {
+                    padding: 1em;
+                }
+
+                .tos-modal-header h2 {
+                    font-size: 1.2em;
+                }
+
+                .tos-modal-footer {
+                    flex-direction: column-reverse;
+                    gap: 0.75em;
+                }
+
+                .tos-modal .tos-btn,
+                .tos-modal-content .tos-btn {
+                    width: 100% !important;
+                    justify-content: center !important;
+                    padding: 12px 14px !important;
+                    font-size: 14px !important;
+                    text-align: center !important;
+                    white-space: normal !important;
+                    min-height: 44px !important;
+                }
+
+                .tos-checkbox {
+                    width: 26px;
+                    height: 26px;
+                    min-width: 26px;
+                    min-height: 26px;
+                    margin-right: 0.75em;
+                }
+
+                .tos-checkbox:checked::after {
+                    left: 8px;
+                    top: 3px;
+                }
+
+                .tos-summary {
+                    padding: 0.75em;
+                }
+
+                .tos-summary ul {
+                    padding-left: 1.2em;
+                }
+
+                .tos-agreement {
+                    padding: 0.75em;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .tos-modal-content {
+                    width: 98%;
+                    max-height: 98vh;
+                    border-radius: 8px;
+                }
+
+                .tos-modal-header,
+                .tos-modal-body,
+                .tos-modal-footer {
+                    padding: 0.75em;
+                }
+
+                .tos-modal-header h2 {
+                    font-size: 1.1em;
+                }
+
+                .tos-summary h3 {
+                    font-size: 1em;
+                }
+
+                .tos-modal .tos-btn,
+                .tos-modal-content .tos-btn {
+                    padding: 12px 14px !important;
+                    font-size: 13px !important;
+                    min-height: 44px !important;
+                    gap: 4px !important;
+                }
+
+                .tos-modal .tos-btn i,
+                .tos-modal-content .tos-btn i {
+                    font-size: 12px !important;
+                }
+
+                .tos-modal .tos-checkbox-label,
+                .tos-modal-content .tos-checkbox-label {
+                    font-size: 0.9em;
+                }
+
+                .tos-modal .tos-checkbox-label span,
+                .tos-modal-content .tos-checkbox-label span {
+                    line-height: 1.5;
+                    color: #2d3748 !important;
+                }
+            }
+
+            /* Prevent body scroll when modal is open */
+            body.tos-modal-open {
+                overflow: hidden;
+            }
+        `;
+
+        document.head.appendChild(style);
+        console.log('[TOS Modal] ✅ Style tag created and appended to <head>');
+        console.log('[TOS Modal] Style element:', style);
+        console.log('[TOS Modal] Style tag in DOM?', document.getElementById('tos-modal-styles') !== null);
+
+        // Verify styles were applied
+        setTimeout(() => {
+            const testModal = document.querySelector('.tos-modal');
+            if (testModal) {
+                const computedStyle = window.getComputedStyle(testModal);
+                console.log('[TOS Modal] AFTER styles - Position:', computedStyle.position);
+                console.log('[TOS Modal] AFTER styles - Z-index:', computedStyle.zIndex);
+                console.log('[TOS Modal] AFTER styles - Display:', computedStyle.display);
+                console.log('[TOS Modal] AFTER styles - Top:', computedStyle.top);
+                console.log('[TOS Modal] AFTER styles - Left:', computedStyle.left);
+            }
+        }, 100);
+    }
+
+    // Close modal with animation
+    function closeModal(modal) {
+        console.log('[TOS Modal] Closing modal...');
+        modal.style.animation = 'tosModalFadeOut 0.3s ease-out';
+        document.body.classList.remove('tos-modal-open');
+
+        setTimeout(() => {
+            if (modal && modal.parentNode) {
+                modal.parentNode.removeChild(modal);
+                console.log('[TOS Modal] ✅ Modal removed from DOM');
+            }
+        }, 300);
+    }
+
+    // Initialize modal
+    function initModal() {
+        console.log('[TOS Modal] initModal() called');
+        console.log('[TOS Modal] document.readyState:', document.readyState);
+
+        // Check if already accepted
+        if (hasAcceptedToS()) {
+            console.log('[TOS Modal] ✅ User has already accepted ToS, skipping modal');
+            return;
+        }
+
+        console.log('[TOS Modal] User has NOT accepted ToS, showing modal');
+
+        // Add styles FIRST
+        addStyles();
+
+        // Create modal
+        const modal = createModal();
+        document.body.classList.add('tos-modal-open');
+
+        // Get elements
+        const checkbox = document.getElementById('tos-agree-checkbox');
+        const acceptBtn = document.getElementById('tos-accept');
+        const declineBtn = document.getElementById('tos-decline');
+        const learnMoreBtn = document.getElementById('tos-learn-more');
+
+        console.log('[TOS Modal] Elements found:', {
+            checkbox: !!checkbox,
+            acceptBtn: !!acceptBtn,
+            declineBtn: !!declineBtn,
+            learnMoreBtn: !!learnMoreBtn
+        });
+
+        // Enable/disable accept button based on checkbox
+        checkbox.addEventListener('change', function() {
+            acceptBtn.disabled = !this.checked;
+            console.log('[TOS Modal] Checkbox changed:', this.checked);
+        });
+
+        // Accept button handler
+        acceptBtn.addEventListener('click', function() {
+            console.log('[TOS Modal] Accept button clicked');
+            if (acceptToS()) {
+                closeModal(modal);
+
+                // Show welcome banner after a short delay
+                setTimeout(() => {
+                    if (window.JamWatHQ && window.JamWatHQ.showWelcomeBanner) {
+                        window.JamWatHQ.showWelcomeBanner();
+                    }
+                }, 500);
+            }
+        });
+
+        // Decline button handler
+        declineBtn.addEventListener('click', function() {
+            console.log('[TOS Modal] Decline button clicked');
+            const confirmed = confirm(
+                'If you decline the Terms of Service, you will not be able to use JamWatHQ. ' +
+                'You will be redirected to Google.com.\n\n' +
+                'Are you sure you want to decline?'
+            );
+
+            if (confirmed) {
+                window.location.href = 'https://www.google.com';
+            }
+        });
+
+        // Learn more button handler
+        learnMoreBtn.addEventListener('click', function() {
+            console.log('[TOS Modal] Learn More button clicked');
+            window.open('tos.html', '_blank');
+        });
+
+        // Focus first interactive element
+        checkbox.focus();
+
+        console.log('[TOS Modal] ✅ Modal initialization complete!');
+    }
+
+    // Export to global namespace
+    window.JamWatHQ = window.JamWatHQ || {};
+    window.JamWatHQ.tosModal = {
+        init: initModal,
+        hasAccepted: hasAcceptedToS,
+        accept: acceptToS
+    };
+
+    // Auto-initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        console.log('[TOS Modal] DOM still loading, waiting for DOMContentLoaded...');
+        document.addEventListener('DOMContentLoaded', initModal);
+    } else {
+        console.log('[TOS Modal] DOM already loaded, initializing immediately');
+        initModal();
+    }
+
+    console.log('%c[TOS Modal] Script setup complete!', 'color: #28a745; font-weight: bold;');
+
+})(window, document);

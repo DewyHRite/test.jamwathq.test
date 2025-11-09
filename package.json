@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "verify:claude": "node scripts/verify-claude-sync.js",
+    "verify:claude:strict": "node scripts/verify-claude-sync.js --strict"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
+}

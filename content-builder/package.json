@@ -1,0 +1,15 @@
+{
+  "name": "content-builder",
+  "version": "1.0.0",
+  "description": "Build script to convert markdown content to HTML for JamWatHQ",
+  "scripts": {
+    "build:content": "node build-content.js",
+    "watch:content": "nodemon --watch frontend/content build-content.js"
+  },
+  "dependencies": {
+    "marked": "^11.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

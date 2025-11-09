@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# Build outputs
+dist/
+build/
+*.min.js
+*.min.css
+
+# Vendor files
+frontend/scripts/jquery*.js
+frontend/scripts/browser.min.js
+frontend/scripts/breakpoints.min.js
+frontend/styles/fontawesome-all.min.css
+
+# Reference/backup files
+*reference*.html
+*backup*.html
+*old*.html

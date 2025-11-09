@@ -1,0 +1,405 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>Agency Rankings | JamWatHQ</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Compare J-1 visa agencies by ratings, reviews, and performance metrics. Real data from Jamaican students." />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' data: https: http:; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com data:; connect-src 'self' http://localhost:3000 https://localhost:3000; base-uri 'self'; form-action 'self';" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="styles/main.css?v=20251101" />
+    <link rel="stylesheet" href="styles/nav-fix.css" />
+    <link rel="stylesheet" href="styles/shared-buttons.css" />
+    <link rel="stylesheet" href="styles/native-ads.css" />
+    <link rel="stylesheet" href="styles/video-ad.css" />
+    <link rel="stylesheet" href="styles/profile-hub.css" />
+    <link rel="stylesheet" href="styles/support-container.css" />
+    <link rel="stylesheet" href="styles/modal-standard.css" />
+    <link rel="stylesheet" href="styles/past-reviews-modal.css" />
+    <link rel="stylesheet" href="styles/agency-details-modal.css" />
+    <link rel="stylesheet" href="styles/cookie-consent-modal.css" />
+    <!-- TOS Modal CSS (HIGH-005 fix) - CSP-compliant external styles -->
+    <link rel="stylesheet" href="styles/tos-modal.css" />
+    <link rel="stylesheet" href="styles/state-scoreboard.css?v=20251101" />
+    <link rel="stylesheet" href="styles/agency-ranking.css?v=20251101" />
+  </head>
+  <body class="no-sidebar is-preload scoreboard-page agency-ranking-page">
+    <div id="page-wrapper">
+      <section id="header" class="wrapper">
+        <div id="logo">
+          <h1>
+            <a href="index.html" class="logo-link">
+              <span id="word1">Jamaican</span>
+              <span id="word2">Work</span>
+              <span id="word3">and</span>
+              <span id="word4">Travel</span>
+              <span id="word5">HQ</span>
+            </a>
+          </h1>
+          <p class="logo-tagline">
+            <span id="tagline1">Straightforward.</span>
+            <span id="tagline2">Reliable.</span>
+            <span id="tagline3">Your</span>
+            <span id="tagline4">#1</span>
+            <span id="tagline5">Jamaican</span>
+            <span id="tagline6">J1</span>
+            <span id="tagline7">Info</span>
+            <span id="tagline8">Hub.</span>
+          </p>
+        </div>
+        <nav id="nav">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li class="current">
+              <a href="agencies.html">Agencies</a>
+              <ul>
+                <li><a href="agency-ranking.html" aria-current="page">Agency Rankings</a></li>
+              </ul>
+            </li>
+            <li><a href="news.html">J-1 News</a></li>
+            <li>
+              <a href="https://jm.usembassy.gov/" target="_blank" rel="noopener">Embassy Websites</a>
+              <ul>
+                <li><a href="https://ceac.state.gov/GenNIV/Default.aspx" target="_blank" rel="noopener">DS-160 Website</a></li>
+                <li><a href="https://ais.usvisa-info.com/en-jm/niv" target="_blank" rel="noopener">Visa Appointment Website</a></li>
+                <li><a href="https://i94.cbp.dhs.gov/home" target="_blank" rel="noopener">I-94 Website</a></li>
+                <li>
+                  <a href="https://www.fmjfee.com/i901fee/index.html?content=status/checkStatus" target="_blank" rel="noopener">
+                    I-901 website
+                  </a>
+                </li>
+                <li>
+                  <a href="https://ceac.state.gov/CEACStatTracker/Status.aspx" target="_blank" rel="noopener">Visa Status Check</a>
+                </li>
+                <li><a href="https://j1visa.state.gov/contacts/" target="_blank" rel="noopener">J-1 Visa Emergency Hotline!!!</a></li>
+              </ul>
+            </li>
+            <li><a href="guide.html">J-1 Guides &amp; Tips</a></li>
+            <li><a href="faq.html">FAQs</a></li>
+            <li><a href="#">J-1 Testimonials</a></li>
+            <li>
+              <a href="share-experience.html">Share your Experience</a>
+              <ul>
+                <li><a href="state-scoreboard.html">State Scoreboard</a></li>
+              </ul>
+            </li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="tos.html">Terms of Service</a></li>
+          </ul>
+        </nav>
+      </section>
+
+      <section id="main" class="wrapper style2 scoreboard-theme">
+        <div class="title">Agency Rankings</div>
+        <div class="scoreboard-shell" role="region" aria-labelledby="scoreboard-hero-title">
+          <header class="scoreboard-hero">
+            <div class="scoreboard-hero-header">
+              <h2 class="scoreboard-hero-title" id="scoreboard-hero-title">Agency Rankings</h2>
+              <p class="scoreboard-hero-subtitle">
+                Compare agencies by application process, support services, communication, and verified student reviews.
+                Data-driven insights to help you choose the right agency for your J-1 journey.
+              </p>
+            </div>
+            <div class="scoreboard-hero-meta">
+              <span class="scoreboard-hero-chip">
+                <i class="fas fa-building" aria-hidden="true"></i>
+                <span id="total-agencies-count">0</span> Agencies
+              </span>
+              <span class="scoreboard-hero-chip">
+                <i class="fas fa-star" aria-hidden="true"></i>
+                <span id="total-reviews-count">0</span> Reviews
+              </span>
+              <span class="scoreboard-hero-chip">
+                <i class="fas fa-clock" aria-hidden="true"></i>
+                Updated <span id="last-updated">Just now</span>
+              </span>
+            </div>
+          </header>
+
+          <!-- Tag Key Explanation -->
+          <div class="tag-key-container">
+            <h3 class="tag-key-title">
+              <i class="fas fa-tags" aria-hidden="true"></i> Understanding Agency Tags
+            </h3>
+            <p class="tag-key-subtitle">Quick reference guide to help you evaluate agencies at a glance</p>
+            <div class="tag-key-grid">
+              <div class="tag-key-item">
+                <span class="agency-badge agency-badge--verified">
+                  <i class="fas fa-certificate" aria-hidden="true"></i>
+                  MLSS Approved
+                </span>
+                <span class="tag-key-description">Registered with Jamaica Ministry of Labour</span>
+              </div>
+              <div class="tag-key-item">
+                <span class="agency-badge agency-badge--top-rated">
+                  <i class="fas fa-trophy" aria-hidden="true"></i>
+                  Top Rated
+                </span>
+                <span class="tag-key-description">Consistently high ratings (4.0★ or above)</span>
+              </div>
+              <div class="tag-key-item">
+                <span class="agency-badge agency-badge--popular">
+                  <i class="fas fa-fire" aria-hidden="true"></i>
+                  Popular
+                </span>
+                <span class="tag-key-description">High volume of student reviews (50+)</span>
+              </div>
+              <div class="tag-key-item">
+                <span class="agency-badge agency-badge--responsive">
+                  <i class="fas fa-comments" aria-hidden="true"></i>
+                  Highly Responsive
+                </span>
+                <span class="tag-key-description">Excellent communication score (4.5★+)</span>
+              </div>
+              <div class="tag-key-item">
+                <span class="agency-badge agency-badge--warning">
+                  <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                  Limited Data
+                </span>
+                <span class="tag-key-description">Fewer than 10 reviews available</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="native-ad native-ad-inline">
+            <img
+              src="https://via.placeholder.com/150x150/ffee00/000000?text=Agency+Guide"
+              alt="Advertisement"
+              class="ad-image"
+            />
+            <div class="ad-content">
+              <h3 class="ad-title">
+                <a href="#" target="_blank" rel="noopener sponsored">
+                  How to Choose the Right J-1 Agency
+                </a>
+              </h3>
+              <p class="ad-description">
+                Learn what to look for in an agency, red flags to avoid, and questions to ask before signing up.
+              </p>
+              <span class="ad-cta">Read Guide →</span>
+            </div>
+          </div>
+
+          <section class="scoreboard-controls" aria-label="Search and filter agency rankings">
+            <div class="scoreboard-search">
+              <label for="agency-search" class="scoreboard-search-label">Search agencies</label>
+              <i class="fas fa-search scoreboard-search-icon" aria-hidden="true"></i>
+              <input
+                type="search"
+                id="agency-search"
+                class="scoreboard-search-input"
+                placeholder="Search agencies (e.g., 10881, ARIZE, InterExchange)"
+                autocomplete="off"
+              />
+            </div>
+            <div class="scoreboard-controls-grid">
+              <div class="scoreboard-filter-group" role="group" aria-label="Filter agencies">
+                <button type="button" class="scoreboard-filter-button is-active" data-filter="all">
+                  <i class="fas fa-building" aria-hidden="true"></i>
+                  All Agencies
+                </button>
+                <button type="button" class="scoreboard-filter-button" data-filter="reviewed">
+                  <i class="fas fa-star" aria-hidden="true"></i>
+                  With Reviews
+                </button>
+                <button type="button" class="scoreboard-filter-button" data-filter="top-rated">
+                  <i class="fas fa-trophy" aria-hidden="true"></i>
+                  4★ &amp; Above
+                </button>
+                <button type="button" class="scoreboard-filter-button" data-filter="verified">
+                  <i class="fas fa-check-circle" aria-hidden="true"></i>
+                  Verified
+                </button>
+              </div>
+              <div class="scoreboard-sort">
+                <label for="agency-sort" class="scoreboard-sr-only">Sort agencies</label>
+                <select id="agency-sort" aria-label="Sort agencies">
+                  <option value="overall-rating" selected>Sort: Overall Rating (High to Low)</option>
+                  <option value="reviews">Sort: Most Reviewed</option>
+                  <option value="support">Sort: Best Support Services</option>
+                  <option value="communication">Sort: Best Communication</option>
+                  <option value="application">Sort: Best Application Process</option>
+                  <option value="alphabetical">Sort: A to Z</option>
+                  <option value="recent">Sort: Recently Active</option>
+                </select>
+              </div>
+              <div class="scoreboard-results" id="scoreboard-results-badge" aria-live="polite">
+                Showing <span id="visible-count">0</span> of <span id="total-count">0</span> agencies
+              </div>
+            </div>
+          </section>
+
+          <div id="agency-ranking-container" class="scoreboard-container is-active" role="region" aria-label="Agency ranking cards">
+            <div class="scoreboard-loading" role="status">
+              <span class="fas fa-spinner scoreboard-loading-icon" aria-hidden="true"></span>
+              <p>Loading agency rankings…</p>
+            </div>
+          </div>
+
+          <div id="no-results-message" class="scoreboard-no-results" style="display: none;" role="status">
+            <i class="fas fa-search" aria-hidden="true"></i>
+            <p>No agencies match your search criteria.</p>
+            <button type="button" class="btn-standard btn-primary" id="clear-filters-btn">
+              Clear Filters
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <section id="footer" class="wrapper">
+        <div class="title">Contact Us</div>
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <!-- Contact -->
+              <section class="feature-list small">
+                <div class="row">
+                  <div class="col-6 col-12-small">
+                    <section>
+                      <h3 class="icon solid fa-home">Mailing Address</h3>
+                      <p>
+                        Jamaica
+                        <br />
+                        1234 Somewhere Rd
+                        <br />
+                      </p>
+                    </section>
+                  </div>
+                  <div class="col-6 col-12-small">
+                    <section>
+                      <h3 class="icon solid fa-comment">Social</h3>
+                      <p>
+                        <a
+                          href="https://www.instagram.com/jamwathq?utm_source=qr&igsh=MWgxdTlpY3NpcWx3bw=="
+                          target="_blank"
+                        >
+                          instagram/JamWatHQ
+                        </a>
+                        <br />
+                        <a href="https://www.facebook.com/profile.php?id=61575307395932" target="_blank">
+                          facebook.com/JamWat
+                        </a>
+                      </p>
+                    </section>
+                  </div>
+                  <div class="col-6 col-12-small">
+                    <section>
+                      <h3 class="icon solid fa-envelope">Email</h3>
+                      <p>
+                        <a href="#">jamwathq@outlook.com</a>
+                      </p>
+                    </section>
+                  </div>
+                  <div class="col-6 col-12-small">
+                    <section>
+                      <h3 class="icon solid fa-phone">Phone</h3>
+                      <p>(876) 555-0000</p>
+                    </section>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+          <div id="copyright">
+            <ul>
+              <li>&copy; JamWatHQ.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Profile Hub Container -->
+    <div class="profile-hub-container">
+      <button id="profile-hub-btn" class="profile-hub-btn">
+        Login
+      </button>
+      <div class="profile-icon" title="User Profile">
+        <i class="fa fa-user"></i>
+      </div>
+    </div>
+
+    <!-- Support Container -->
+    <div class="support-container">
+      <a href="report-problem.html" class="report-problem-btn" title="Report a problem">
+        Report a problem
+      </a>
+      <a href="report-problem.html" class="floating-gear-icon" title="Report a problem">
+        <i class="fa fa-cog" aria-hidden="true"></i>
+      </a>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal" role="dialog" aria-labelledby="loginModalTitle" aria-describedby="loginModalDesc" aria-modal="true">
+      <div class="modal-content auth-modal-content">
+        <h2 id="loginModalTitle" class="modal-title">
+          <i class="fas fa-sign-in-alt" aria-hidden="true"></i> Login Required
+        </h2>
+        <p id="loginModalDesc" class="modal-description">
+          You must be logged in to access this feature. This helps us maintain authentic and trustworthy information from real J-1 participants.
+        </p>
+        <p class="modal-description">Please log in with Google or Facebook to continue.</p>
+        <div class="modal-buttons auth-modal-actions">
+          <button id="btn-google-login" class="btn-standard btn-google auth-modal-btn" aria-label="Sign in with Google">
+            <i class="fab fa-google"></i> Sign in with Google
+          </button>
+          <button id="btn-facebook-login" class="btn-standard btn-facebook auth-modal-btn" aria-label="Sign in with Facebook">
+            <i class="fab fa-facebook"></i> Sign in with Facebook
+          </button>
+          <button id="btn-cancel-login" class="btn-standard btn-secondary auth-modal-btn" aria-label="Cancel login and close modal">
+            CANCEL
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cookie Consent Modal -->
+    <div id="cookieConsentModal" class="modal cookie-consent-modal" role="dialog" aria-labelledby="cookieConsentTitle" aria-describedby="cookieConsentDesc" aria-modal="true">
+      <div class="modal-content cookie-consent-content">
+        <h2 id="cookieConsentTitle" class="modal-title">
+          <i class="fas fa-cookie-bite" aria-hidden="true"></i> Cookie & Cache Notice
+        </h2>
+        <p id="cookieConsentDesc" class="modal-description">
+          We use cookies and browser storage to enhance your experience on JamWatHQ. This includes:
+        </p>
+        <ul class="cookie-consent-list">
+          <li><strong>Authentication cookies</strong> to keep you logged in</li>
+          <li><strong>Session storage</strong> to remember your preferences</li>
+          <li><strong>Local storage</strong> to save your settings</li>
+        </ul>
+        <p class="modal-description">
+          By continuing to use JamWatHQ, you consent to our use of cookies and browser storage as described in our <a href="tos.html" target="_blank" rel="noopener">Terms of Service</a>.
+        </p>
+        <div class="modal-buttons cookie-consent-actions">
+          <button id="btn-accept-cookies" class="btn-standard btn-primary cookie-consent-btn" aria-label="Accept cookies and close">
+            <i class="fas fa-check"></i> Accept &amp; Continue
+          </button>
+          <button id="btn-learn-more-cookies" class="btn-standard btn-secondary cookie-consent-btn" aria-label="Learn more about cookies">
+            Learn More
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="scripts/jquery.min.js"></script>
+    <script src="scripts/jquery.dropotron.min.js"></script>
+    <script src="scripts/browser.min.js"></script>
+    <script src="scripts/breakpoints.min.js"></script>
+    <script src="scripts/util.js"></script>
+    <script src="scripts/main.js"></script>
+    <!-- ToS Modal (loads automatically on first visit) -->
+    <script src="scripts/tos-modal.js"></script>
+    <script src="scripts/auth-client.js"></script>
+    <script src="scripts/login-modal.js"></script>
+    <script src="scripts/cookie-consent-modal.js"></script>
+    <script src="scripts/profile-hub.js"></script>
+    <script src="scripts/agencies-review-modal.js"></script>
+    <script src="scripts/agency-reviews-display-modal.js"></script>
+    <script src="scripts/agency-details-modal.js"></script>
+    <script src="scripts/agency-ranking.js"></script>
+  </body>
+</html>

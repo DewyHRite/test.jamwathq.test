@@ -1,0 +1,21 @@
+# Task Tracking
+
+- [ ] Backup affected files
+  - Copy `share-experience.html`, `state-scoreboard-demo.html`, and any CSS/JS we modify into a timestamped backup folder.
+- [ ] Review existing state-scoreboard demo
+  - Analyze `state-scoreboard-demo.html` layout, assets, and CSS dependencies.
+- [ ] Create `state-scoreboard.html`
+  - Build standalone page mirroring the demo layout using external CSS files only.
+  - Include ranked list, tabbed/pagination for all 50 states, average rating, review count, and visit-year display placeholder.
+- [ ] Integrate scoreboard styles
+  - Add/update external stylesheet(s) so no inline rules remain.
+- [ ] Update `share-experience.html`
+  - Insert a clearly styled scoreboard button linking to the new page with accessible markup and externalized CSS.
+- [ ] Update global navigation
+  - Nest the scoreboard link under Share Experience with keyboard-accessible markup.
+- [ ] Document changes in `docs/state-scoreboard.md`
+  - Capture page creation, navigation updates, button placement, styling, testing steps, and design source references.
+- [ ] Run local verification
+  - Provide commands for backend/frontend (ports 3000/8000) and checklist for manual validation.
+- [ ] Perform Snyk code scan
+  - Run `snyk_code_scan`, address introduced issues, and rescan until clean.

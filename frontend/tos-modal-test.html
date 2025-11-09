@@ -1,0 +1,259 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>TOS Modal Test | JamWatHQ</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' data: https: http:; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com data:; connect-src 'self'; base-uri 'self'; form-action 'self';" />
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+      /* Minimal page styling for testing */
+      body {
+        margin: 0;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+      }
+
+      .test-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .test-info {
+        background: #e3f2fd;
+        border-left: 4px solid #2196f3;
+        padding: 15px;
+        margin: 20px 0;
+      }
+
+      .test-controls {
+        margin: 20px 0;
+      }
+
+      button {
+        padding: 10px 20px;
+        margin: 5px;
+        border: none;
+        border-radius: 4px;
+        background: #2196f3;
+        color: white;
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      button:hover {
+        background: #1976d2;
+      }
+
+      #console-output {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: 15px;
+        border-radius: 4px;
+        font-family: 'Courier New', monospace;
+        font-size: 12px;
+        max-height: 400px;
+        overflow-y: auto;
+        margin-top: 20px;
+      }
+
+      .console-line {
+        margin: 2px 0;
+        padding: 2px 0;
+      }
+
+      .console-error {
+        color: #f48771;
+      }
+
+      .console-warn {
+        color: #dcdcaa;
+      }
+
+      .console-info {
+        color: #4fc1ff;
+      }
+
+      .console-success {
+        color: #6a9955;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="test-container">
+      <h1>🧪 TOS Modal Debug Test Page</h1>
+
+      <div class="test-info">
+        <p><strong>Purpose:</strong> Minimal page to test TOS modal without interference from other page CSS/scripts.</p>
+        <p><strong>Instructions:</strong></p>
+        <ol>
+          <li>Open browser DevTools (F12)</li>
+          <li>Go to Console tab</li>
+          <li>Clear localStorage (button below)</li>
+          <li>Refresh the page</li>
+          <li>Watch for green console messages from the TOS modal script</li>
+        </ol>
+      </div>
+
+      <div class="test-controls">
+        <h3>Test Controls:</h3>
+        <button onclick="clearLocalStorage()">Clear localStorage & Reload</button>
+        <button onclick="checkModalInDOM()">Check if Modal is in DOM</button>
+        <button onclick="checkStylesInDOM()">Check if Styles are in DOM</button>
+        <button onclick="inspectModalCSS()">Inspect Modal CSS</button>
+      </div>
+
+      <div id="console-output">
+        <div class="console-line console-info">📊 Browser Console Output:</div>
+        <div class="console-line">Open DevTools Console (F12) to see detailed TOS modal debug messages...</div>
+      </div>
+
+      <h2>Page Content</h2>
+      <p>This is test content to verify the page loads correctly.</p>
+      <p>The TOS modal should appear OVER this content as a centered overlay with a dark backdrop.</p>
+      <p>If you see it at the bottom of the page, something is wrong with the CSS.</p>
+    </div>
+
+    <script>
+      // Intercept console.log to display on page
+      const consoleOutput = document.getElementById('console-output');
+      const originalLog = console.log;
+      const originalError = console.error;
+      const originalWarn = console.warn;
+
+      console.log = function(...args) {
+        originalLog.apply(console, args);
+        const line = document.createElement('div');
+        line.className = 'console-line';
+        if (args[0] && typeof args[0] === 'string' && args[0].includes('TOS Modal')) {
+          line.className += ' console-success';
+        }
+        line.textContent = args.join(' ');
+        consoleOutput.appendChild(line);
+        consoleOutput.scrollTop = consoleOutput.scrollHeight;
+      };
+
+      console.error = function(...args) {
+        originalError.apply(console, args);
+        const line = document.createElement('div');
+        line.className = 'console-line console-error';
+        line.textContent = '❌ ERROR: ' + args.join(' ');
+        consoleOutput.appendChild(line);
+        consoleOutput.scrollTop = consoleOutput.scrollHeight;
+      };
+
+      console.warn = function(...args) {
+        originalWarn.apply(console, args);
+        const line = document.createElement('div');
+        line.className = 'console-line console-warn';
+        line.textContent = '⚠️ WARN: ' + args.join(' ');
+        consoleOutput.appendChild(line);
+        consoleOutput.scrollTop = consoleOutput.scrollHeight;
+      };
+
+      function clearLocalStorage() {
+        localStorage.clear();
+        console.log('✅ localStorage cleared! Reloading page...');
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      }
+
+      function checkModalInDOM() {
+        const modal = document.getElementById('tos-modal');
+        if (modal) {
+          console.log('✅ Modal FOUND in DOM!');
+          console.log('Modal element:', modal);
+          console.log('Modal classes:', modal.className);
+          console.log('Modal innerHTML length:', modal.innerHTML.length);
+        } else {
+          console.log('❌ Modal NOT found in DOM');
+        }
+      }
+
+      function checkStylesInDOM() {
+        const styles = document.getElementById('tos-modal-styles');
+        if (styles) {
+          console.log('✅ Style tag FOUND in DOM!');
+          console.log('Style tag location:', styles.parentNode.tagName);
+          console.log('Style content length:', styles.textContent.length);
+        } else {
+          console.log('❌ Style tag NOT found in DOM');
+        }
+      }
+
+      function inspectModalCSS() {
+        const modal = document.getElementById('tos-modal');
+        if (!modal) {
+          console.log('❌ Can\'t inspect - modal not in DOM');
+          return;
+        }
+
+        const computed = window.getComputedStyle(modal);
+        console.log('📊 Modal Computed Styles:');
+        console.log('  position:', computed.position);
+        console.log('  display:', computed.display);
+        console.log('  z-index:', computed.zIndex);
+        console.log('  top:', computed.top);
+        console.log('  left:', computed.left);
+        console.log('  width:', computed.width);
+        console.log('  height:', computed.height);
+        console.log('  align-items:', computed.alignItems);
+        console.log('  justify-content:', computed.justifyContent);
+
+        const content = modal.querySelector('.tos-modal-content');
+        if (content) {
+          const contentComputed = window.getComputedStyle(content);
+          console.log('📊 Modal Content Computed Styles:');
+          console.log('  position:', contentComputed.position);
+          console.log('  background:', contentComputed.background);
+          console.log('  max-width:', contentComputed.maxWidth);
+          console.log('  border-radius:', contentComputed.borderRadius);
+        }
+      }
+
+      // Log page load
+      console.log('%c🧪 TOS Modal Test Page Loaded', 'color: #2196f3; font-weight: bold; font-size: 16px;');
+      console.log('Waiting for tos-modal-debug.js to execute...');
+    </script>
+
+    <!-- TOS Modal Script - DEBUG VERSION -->
+    <!-- Path works when served from frontend/ directory -->
+    <script src="scripts/tos-modal-debug.js"></script>
+
+    <script>
+      // If script didn't load, show helpful error
+      setTimeout(() => {
+        if (!window.JamWatHQ || !window.JamWatHQ.tosModal) {
+          console.error('❌ SCRIPT LOAD FAILED!');
+          console.error('Current page location:', window.location.href);
+          console.error('Expected script at: scripts/tos-modal-debug.js');
+          console.error('');
+          console.error('TROUBLESHOOTING:');
+          console.error('1. Make sure you copied tos-modal-debug.js to frontend/scripts/');
+          console.error('2. OR serve from the parent directory');
+          console.error('3. Check browser Network tab for failed request');
+
+          const output = document.getElementById('console-output');
+          if (output) {
+            output.innerHTML += '<div class="console-line console-error">❌ SCRIPT FAILED TO LOAD!</div>';
+            output.innerHTML += '<div class="console-line console-error">Check console for troubleshooting steps</div>';
+          }
+        }
+      }, 1000);
+    </script>
+  </body>
+</html>

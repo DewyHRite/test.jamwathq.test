@@ -1,0 +1,233 @@
+/**
+ * First Style (Live Code v.1) - Static CSS Implementation
+ * See docs/style-first-v1.md for full documentation
+ * Generated: 2025-10-30
+ *
+ * Purpose: Traditional, static CSS approach optimized for simplicity,
+ *          predictability, and legacy compatibility
+ *
+ * Features:
+ * - Button container styling matching Live Code v.1
+ * - Smooth slide-down animation
+ * - Glowing box-shadow effect
+ * - Responsive design
+ * - CSS variables for consistency
+ */
+
+/* ================================================
+   CSS VARIABLES - Button and Container Consistency
+   ================================================ */
+:root {
+  /* Button Standard Variables */
+  --btn-standard-font-size: 1rem;
+  --btn-standard-font-weight: 600;
+  --btn-standard-padding-y: 0.85em;
+  --btn-standard-padding-x: 2.4em;
+  --btn-standard-radius: 999px;
+  --btn-standard-gap: 0.55em;
+  --btn-standard-line-height: 1.2;
+  --btn-standard-transition: transform 0.2s ease, box-shadow 0.2s ease,
+                             background-color 0.2s ease, color 0.2s ease,
+                             border-color 0.2s ease;
+
+  /* Container Variables */
+  --container-max-width: 600px;
+  --container-width: 95%;
+  --container-padding: 1.5em;
+  --container-margin: 10% auto;
+  --container-bg: #000000;
+  --container-color: #919499;
+  --container-border-width: 3px;
+  --container-border-color: #ffee00;
+  --container-border-radius: 10px;
+  --container-shadow: 0 10px 40px rgba(255, 238, 0, 0.4);
+}
+
+/* ================================================
+   BUTTON CONTAINER STYLE (Live Code v.1)
+   ================================================ */
+.button-container {
+  /* Typography */
+  font-size: 1rem;
+  font-weight: 600;
+  font: inherit;
+  letter-spacing: 0;
+  color: var(--container-color);
+  -webkit-text-size-adjust: none;
+
+  /* Layout */
+  padding: var(--container-padding);
+  margin: var(--container-margin);
+  max-width: var(--container-max-width);
+  width: var(--container-width);
+  box-sizing: inherit;
+  vertical-align: baseline;
+  position: relative;
+
+  /* Visual Styling */
+  background-color: var(--container-bg);
+  border: var(--container-border-width) solid var(--container-border-color);
+  border-radius: var(--container-border-radius);
+  box-shadow: var(--container-shadow);
+
+  /* Animation */
+  animation: slideDown 0.3s ease;
+}
+
+/* ================================================
+   SLIDE DOWN ANIMATION
+   ================================================ */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================================================
+   RESPONSIVE DESIGN
+   ================================================ */
+
+/* Tablet and below */
+@media (max-width: 768px) {
+  .button-container {
+    width: 98%;
+    padding: 1.2em;
+    margin: 5% auto;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .button-container {
+    width: 98%;
+    padding: 1em;
+    margin: 3% auto;
+    font-size: 0.95rem;
+  }
+}
+
+/* ================================================
+   ACCESSIBILITY
+   ================================================ */
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .button-container {
+    animation: none;
+  }
+}
+
+/* Focus states for keyboard navigation */
+.button-container:focus-within {
+  outline: 2px solid var(--container-border-color);
+  outline-offset: 2px;
+}
+
+/* ================================================
+   BUTTON STYLES WITHIN CONTAINER
+   ================================================ */
+
+/* Standard button styling */
+.button-container .btn-standard,
+.button-container button {
+  font-size: var(--btn-standard-font-size);
+  font-weight: var(--btn-standard-font-weight);
+  padding: var(--btn-standard-padding-y) var(--btn-standard-padding-x);
+  border-radius: var(--btn-standard-radius);
+  line-height: var(--btn-standard-line-height);
+  transition: var(--btn-standard-transition);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--btn-standard-gap);
+  cursor: pointer;
+  border: 2px solid transparent;
+  text-decoration: none;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Button container layout */
+.button-container .button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+  width: 100%;
+}
+
+/* ================================================
+   PRINT STYLES
+   ================================================ */
+@media print {
+  .button-container {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+}
+
+/* ================================================
+   UTILITY CLASSES
+   ================================================ */
+
+/* Center content within button container */
+.button-container.center-content {
+  text-align: center;
+}
+
+/* Left-align content within button container */
+.button-container.left-content {
+  text-align: left;
+}
+
+/* Remove animation from specific containers */
+.button-container.no-animation {
+  animation: none;
+}
+
+/* Compact variant */
+.button-container.compact {
+  padding: 1em;
+  max-width: 500px;
+}
+
+/* Wide variant */
+.button-container.wide {
+  max-width: 800px;
+}
+
+/* ================================================
+   LEGACY BROWSER SUPPORT
+   ================================================ */
+
+/* Fallback for older browsers without CSS variables */
+@supports not (--css: variables) {
+  .button-container {
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 1.5em;
+    margin: 10% auto;
+    max-width: 600px;
+    width: 95%;
+    background-color: #000000;
+    color: #919499;
+    border: 3px solid #ffee00;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(255, 238, 0, 0.4);
+  }
+}
+
+/* Fallback for browsers without flexbox */
+@supports not (display: flex) {
+  .button-container .button-group {
+    display: block;
+  }
+
+  .button-container .button-group > * {
+    margin-bottom: 1em;
+  }
+}

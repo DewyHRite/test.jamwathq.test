@@ -1,0 +1,1595 @@
+      :root {
+        --agency-button-base-font-size: 0.8rem;
+        --agency-button-base-padding-y: 0.35rem;
+        --agency-button-base-padding-x: 0.9rem;
+        --agency-button-scale: 1.2; /* +20% sizing per requirement */
+        --agency-button-font-size: calc(var(--agency-button-base-font-size) * var(--agency-button-scale));
+        --agency-button-padding-y: calc(var(--agency-button-base-padding-y) * var(--agency-button-scale));
+        --agency-button-padding-x: calc(var(--agency-button-base-padding-x) * var(--agency-button-scale));
+        --agency-button-radius: 999px;
+        --btn-standard-font-size: var(--agency-button-font-size);
+        --btn-standard-padding-y: var(--agency-button-padding-y);
+        --btn-standard-padding-x: var(--agency-button-padding-x);
+        --btn-standard-radius: var(--agency-button-radius);
+      }
+
+      /* Agency Information Cards */
+      .agency-info {
+        margin-top: 2em;
+        padding: 1.5em;
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+      .agency-info h3 {
+        margin-top: 1em;
+        color: #ddd;
+      }
+      .agency-info p {
+        margin: 0.5em 0;
+        font-size: 0.9em;
+      }
+
+      /* Compact Agency Cards (optimized) */
+      .agency-info.compact {
+        width: 100%;
+        max-width: 1120px;
+        margin: 1em auto 1em auto;
+        padding: 1em;
+        background: #000000;
+        border: 1px solid #ffee00;
+        border-radius: 15px;
+        box-sizing: border-box;
+        color: #ffffff;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+      }
+
+      /* STATE 1: Fully Collapsed - Only name, rating, and expand button */
+      .agency-info.compact.condensed {
+        padding: 0.8em 1em;
+      }
+
+      .agency-info.compact.condensed .info-container {
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition:
+          max-height 0.3s ease,
+          opacity 0.3s ease;
+      }
+
+      .agency-info.compact.condensed .review-section {
+        display: none !important;
+      }
+
+      .agency-info.compact.condensed .btn-primary {
+        display: none;
+      }
+
+      /* STATE 2: Semi-Expanded - Shows info but not review form */
+      .agency-info.compact.expanded {
+        cursor: default;
+      }
+
+      .agency-info.compact.expanded .info-container {
+        max-height: 2000px;
+        opacity: 1;
+        transition:
+          max-height 0.5s ease,
+          opacity 0.5s ease;
+      }
+
+      .agency-info.compact.expanded .review-section {
+        display: none;
+      }
+
+      /* STATE 3: Fully Expanded - Shows review form */
+      .agency-info.compact.expanded.reviewing .review-section {
+        display: inline;
+      }
+
+      /* Hover effects only on condensed cards */
+      .agency-info.compact.condensed:hover {
+        transform: scale(1.02);
+        box-shadow: 0 4px 12px rgba(255, 238, 0, 0.4);
+        border-color: #28a745;
+      }
+
+      /* InterExchange specific styling - blue theme for all states */
+      #wrapper-interexchange .agency-info.compact {
+        border-color: #0066cc !important;
+      }
+
+      #wrapper-interexchange .agency-info.compact.condensed:hover {
+        border-color: #0066cc;
+        box-shadow: 0 4px 12px rgba(0, 102, 204, 0.4);
+      }
+
+      #wrapper-interexchange .agency-info.compact:active {
+        border-color: #0066cc;
+        box-shadow: 0 4px 12px rgba(0, 102, 204, 0.5);
+      }
+
+      /* Agency compact card link styles - comprehensive state management */
+      .agency-info.compact a {
+        color: #ffffff !important; /* Default: white for visibility */
+        text-decoration: underline;
+      }
+
+      .agency-info.compact a:visited {
+        color: #28a745 !important; /* Visited: green to indicate visited state */
+        text-decoration: underline;
+      }
+
+      .agency-info.compact a:hover {
+        color: #ffee00 !important; /* Hover: brand yellow */
+        text-decoration: underline;
+      }
+
+      .agency-info.compact a:active {
+        color: #28a745 !important; /* Active: green for click feedback */
+        text-decoration: underline;
+      }
+
+      .agency-info.compact a:focus {
+        color: #ffee00 !important; /* Focus: yellow with outline for accessibility */
+        outline: 2px solid #ffee00;
+        outline-offset: 2px;
+        text-decoration: underline;
+      }
+      .agency-info.compact h3 {
+        font-size: 1.1em;
+        color: #ffee00;
+        margin: 0.2em 0;
+      }
+
+      /* Agency status color legend */
+      .agency-info.compact[data-mlss-status="approved"] header h3 {
+        color: #28a745 !important;
+      }
+
+      .agency-info.compact[data-mlss-status="pending"] {
+        border-color: #ffcf40;
+        box-shadow: 0 0 0 1px rgba(255, 207, 64, 0.25);
+      }
+
+      .agency-info.compact[data-mlss-status="pending"] header h3 {
+        color: #ffcf40 !important;
+      }
+
+      .agency-info.compact[data-mlss-status="exception"] {
+        border-color: #4a90e2;
+        box-shadow: 0 0 0 1px rgba(74, 144, 226, 0.25);
+      }
+
+      .agency-info.compact[data-mlss-status="exception"] header h3 {
+        color: #4a90e2 !important;
+      }
+
+      .agency-info.compact[data-mlss-status="unlisted"],
+      .agency-info.unapproved {
+        border-color: #ff4d4f;
+        box-shadow: 0 0 0 1px rgba(255, 77, 79, 0.25);
+      }
+
+      .agency-info.compact[data-mlss-status="unlisted"] header h3,
+      .agency-info.unapproved header h3 {
+        color: #ff4d4f !important;
+      }
+
+      .agency-info.compact[data-mlss-status="unlisted"] .info-container,
+      .agency-info.unapproved .info-container {
+        border-top: 1px dashed rgba(255, 77, 79, 0.35);
+        margin-top: 0.75em;
+        padding-top: 0.75em;
+      }
+
+      .status-legend {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 0.8em;
+        margin: 1.5em auto 0;
+        padding: 1em 1.25em;
+        background: rgba(0, 0, 0, 0.75);
+        border: 1px solid #ffee00;
+        border-radius: 12px;
+        color: #ffffff;
+        max-width: 720px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      }
+
+      .status-legend h4 {
+        grid-column: 1 / -1;
+        margin: 0 0 0.25em 0;
+        font-size: 1.05em;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #ffee00;
+        text-align: center;
+      }
+
+      .status-legend .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.6em;
+        font-size: 0.95em;
+      }
+
+      .status-legend .status-bullet {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+      }
+
+      .status-bullet.approved {
+        background: #28a745;
+      }
+      .status-bullet.pending {
+        background: #ffcf40;
+      }
+      .status-bullet.unlisted {
+        background: #ff4d4f;
+      }
+      .status-bullet.exception {
+        background: #4a90e2;
+      }
+
+      .filter-actions {
+        margin-top: 1.5rem;
+      }
+
+      .clear-filters-btn {
+        background: #ffee00;
+        color: #000;
+        border: 1px solid #000;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      .clear-filters-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Native Ad Base Styles - Ensure ads are always block-level and take full width */
+      .native-ad {
+        display: block;
+        width: 100%;
+        clear: both;
+        box-sizing: border-box;
+      }
+
+      article.box.post.filtering-active .native-ad {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 720px;
+      }
+
+      article.box.post.filtering-active .native-ad .ad-image {
+        width: 100%;
+        height: auto;
+      }
+
+      .agency-info.compact section {
+        margin: 0.2em 0;
+      }
+
+      /* Condensed rating display - Shows in STATE 1 (Fully Collapsed) */
+      .agency-info.compact.condensed header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5em;
+        flex-wrap: wrap;
+      }
+
+      .condensed-rating {
+        display: none;
+        color: #ffee00;
+        font-size: 0.95em;
+        font-weight: bold;
+        white-space: nowrap;
+        background: rgba(255, 238, 0, 0.1);
+        padding: 0.3em 0.6em;
+        border-radius: 5px;
+        border: 1px solid #28a745;
+      }
+
+      .agency-info.compact.condensed .condensed-rating {
+        display: inline-block;
+      }
+
+      .agency-info.compact.expanded .condensed-rating {
+        display: none;
+      }
+
+      /* Expand/Collapse indicator */
+      .agency-info.compact.condensed::after {
+        content: "▼ Click to expand";
+        position: absolute;
+        left: 50%;
+        bottom: 0.25em;
+        transform: translateX(-50%);
+        color: #28a745;
+        font-size: 0.85em;
+        font-weight: bold;
+        pointer-events: none;
+        text-align: center;
+      }
+
+      .agency-info.compact.expanded::after {
+        content: "▲ Click to collapse";
+        position: absolute;
+        left: 50%;
+        bottom: 0.25em;
+        transform: translateX(-50%);
+        color: #28a745;
+        font-size: 0.85em;
+        font-weight: bold;
+        pointer-events: none;
+      }
+
+      /* View Past Reviews Button - Semi-Expanded (STATE 2): Style like collapse button */
+      .view-past-reviews-btn-semi {
+        position: static;
+        color: #fff;
+        background: #28a745;
+        border: 0;
+        cursor: pointer;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease,
+          background 0.2s ease;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.35em;
+        text-transform: uppercase;
+        z-index: 10;
+        pointer-events: all;
+        margin: 1.5em 0 0 0.6em;
+        vertical-align: middle;
+        margin-left: auto;
+      }
+
+      .view-past-reviews-btn-semi:hover {
+        background: #28a745;
+      }
+
+      /* Hide in fully collapsed state */
+      .agency-info.compact.condensed .view-past-reviews-btn-semi {
+        display: none;
+      }
+
+      /* Hide in fully expanded state */
+      .agency-info.compact.expanded.reviewing .view-past-reviews-btn-semi {
+        display: none;
+      }
+
+      /* Leave a Review button */
+      .agency-info.compact .btn.btn-primary {
+        margin-top: 1.5em;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        vertical-align: middle;
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      .agency-info.compact .btn.btn-secondary {
+        margin-top: 1em;
+      }
+
+      .agency-info.compact.reviewing .review-section form {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75em;
+      }
+
+      .agency-info.compact header,
+      .agency-info.compact .info-container,
+      .agency-info.compact .review-section {
+        flex: 1 1 100%;
+        width: 100%;
+      }
+
+      .agency-info.compact.reviewing .review-section form button[type="button"] {
+        align-self: flex-start;
+        margin-top: 1.2em;
+      }
+
+      .agency-info.compact.reviewing .btn.btn-secondary {
+        margin-left: auto;
+        margin-right: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* REMOVED: Orphaned CSS selectors [onclick*="toggleReviewSection"]
+         (inline handlers removed in CRIT-003 fix - 2025-11-04)
+         These rules targeted non-existent elements - HIGH-006 fix - 2025-11-05 */
+
+      /* Hide Leave a Review button in condensed state */
+      .agency-info.compact.condensed .btn-primary {
+        display: none;
+      }
+
+      /* Agency Card with Reviews Layout */
+      .agency-wrapper {
+        display: flex;
+        gap: 2em;
+        margin: 1em auto;
+        max-width: 100%;
+        align-items: flex-start;
+      }
+
+      .agency-wrapper .agency-info.compact {
+        flex: 1;
+        margin: 0;
+      }
+
+      .agency-wrapper.reviews-visible .agency-info.compact {
+        flex: 1;
+      }
+
+      /* Past Reviews Box - Matches agency card dimensions */
+      /* Past Reviews Modal Popup */
+      .past-reviews-modal {
+        display: none;
+        position: fixed;
+        z-index: 3000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+      }
+
+      .past-reviews-modal.show {
+        display: block;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .past-reviews-box {
+        background: #000000;
+        border: 3px solid #ffee00;
+        border-radius: 15px;
+        padding: 2em;
+        margin: 5% auto;
+        max-width: 900px;
+        max-height: 80vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+        box-shadow: 0 8px 24px rgba(255, 238, 0, 0.4);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        position: relative;
+      }
+
+      /* Header container for agency name and hide button */
+      .past-reviews-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5em;
+        padding-bottom: 0.5em;
+        border-bottom: 2px solid #ffee00;
+        gap: 1em;
+      }
+
+      /* Agency name header in popup */
+      .past-reviews-agency-name {
+        color: #ffee00;
+        font-size: 1.5em;
+        font-weight: bold;
+        flex: 1;
+        text-align: left;
+      }
+
+      .past-reviews-box h3 {
+        color: #ffffff;
+        text-align: center;
+        margin-bottom: 1.5em;
+        margin-top: 1em;
+        font-size: 1.3em;
+      }
+
+      /* Hide Reviews button inside popup - moved to top */
+      .hide-reviews-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.6em 1.5em;
+        background: #28a745;
+        color: #ffffff;
+        border: 2px solid #ffee00;
+        border-radius: 6px;
+        font-weight: bold;
+        font-size: 0.95em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .hide-reviews-btn:hover {
+        background: #218838;
+        box-shadow: 0 0 15px rgba(40, 167, 69, 0.8);
+        transform: translateY(-2px);
+      }
+
+      .hide-reviews-btn i {
+        margin-right: 0.5em;
+      }
+
+      /* Responsive: Stack on smaller screens */
+      @media screen and (max-width: 600px) {
+        .past-reviews-header {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0.75em;
+        }
+
+        .past-reviews-agency-name {
+          text-align: center;
+          font-size: 1.3em;
+        }
+
+        .hide-reviews-btn {
+          width: 100%;
+        }
+      }
+
+      /* Scrollbar styling for past reviews */
+      .past-reviews-box::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .past-reviews-box::-webkit-scrollbar-track {
+        background: rgba(255, 238, 0, 0.1);
+        border-radius: 4px;
+      }
+
+      .past-reviews-box::-webkit-scrollbar-thumb {
+        background: #28a745;
+        border-radius: 4px;
+      }
+
+      .past-reviews-box::-webkit-scrollbar-thumb:hover {
+        background: #ffee00;
+      }
+
+      .no-reviews-message {
+        color: #888;
+        text-align: center;
+        padding: 2em;
+        font-size: 1.1em;
+      }
+
+      .past-reviews-box h3 {
+        color: #ffee00;
+        margin-top: 0;
+        margin-bottom: 1em;
+        font-size: 1.3em;
+        border-bottom: 2px solid #ffee00;
+        padding-bottom: 0.5em;
+      }
+
+      .review-item {
+        background: #000000;
+        border: 1px solid #444;
+        border-radius: 8px;
+        padding: 1em;
+        margin-bottom: 1em;
+        transition: all 0.3s ease;
+        word-wrap: break-word; /* Break long words */
+        overflow-wrap: break-word; /* Modern standard */
+        word-break: break-word; /* Force break on long unspaced strings */
+      }
+
+      .review-item:hover {
+        border-color: #ffee00;
+        box-shadow: 0 2px 8px rgba(255, 238, 0, 0.2);
+      }
+
+      .review-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5em;
+      }
+
+      .review-rating {
+        color: #ffee00;
+        font-size: 0.9em;
+      }
+
+      .review-date {
+        color: #888;
+        font-size: 0.8em;
+      }
+
+      .review-comment {
+        color: #ffffff;
+        line-height: 1.6;
+        margin-top: 0.5em;
+      }
+
+      .review-categories {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5em;
+        margin-top: 0.8em;
+        font-size: 0.85em;
+      }
+
+      .category-rating {
+        color: #aaa;
+      }
+
+      .category-rating .fa {
+        font-size: 14px;
+        color: orange;
+      }
+
+      /* Scrollbar styling for reviews box */
+      .past-reviews-box::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .past-reviews-box::-webkit-scrollbar-track {
+        background: #000;
+        border-radius: 4px;
+      }
+
+      .past-reviews-box::-webkit-scrollbar-thumb {
+        background: #ffee00;
+        border-radius: 4px;
+      }
+
+      .past-reviews-box::-webkit-scrollbar-thumb:hover {
+        background: #28a745;
+      }
+
+      /* Layout */
+      * {
+        box-sizing: border-box;
+      }
+      #content {
+        width: 100%;
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 1em;
+      }
+
+      /* Rating System */
+      .heading {
+        font-size: 25px;
+        margin-right: 25px;
+      }
+      .fa {
+        font-size: 25px;
+      }
+      .checked {
+        color: orange;
+      }
+      /* Tightened spacing between question labels and star ratings */
+      .review-section form > label {
+        display: block;
+        margin-bottom: 0.35em; /* Reduced from default to tighten spacing */
+        margin-top: 0.8em; /* Consistent top spacing between questions */
+        font-weight: 500;
+        color: #ffffff;
+        line-height: 1.4;
+      }
+
+      /* Star rating widget - immediately follows label with minimal gap */
+      .star-rating {
+        direction: rtl;
+        display: inline-flex;
+        margin-top: 0; /* Remove any top margin for tight connection to label */
+        margin-bottom: 0.5em; /* Small bottom margin before next question */
+      }
+      .star-rating input[type="radio"] {
+        display: none;
+      }
+      .star-rating label {
+        font-size: 25px;
+        color: #ccc;
+        cursor: pointer;
+      }
+      .star-rating input[type="radio"]:checked ~ label,
+      .star-rating label:hover,
+      .star-rating label:hover ~ label {
+        color: orange;
+      }
+
+      /* Mandatory field styling - usage frequency question */
+      .review-section .usage-frequency-group {
+        margin: 1.2em 0 1em 0;
+        padding: 1em;
+        background: rgba(255, 238, 0, 0.08);
+        border-left: 3px solid #ffee00;
+        border-radius: 6px;
+      }
+
+      .review-section .usage-frequency-group label {
+        display: block;
+        margin-bottom: 0.6em;
+        font-weight: 600;
+        color: #ffee00; /* Highlight color for required field */
+      }
+
+      .review-section .usage-frequency-group label::after {
+        content: " *";
+        color: #ff4d4f;
+        font-weight: bold;
+      }
+
+      .review-section .usage-frequency-group select {
+        width: 100%;
+        max-width: 300px;
+        padding: 0.6em 0.8em;
+        font-size: 1em;
+        border: 2px solid #ffee00;
+        border-radius: 6px;
+        background: #1a1a1a;
+        color: #ffffff;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .review-section .usage-frequency-group select:focus {
+        outline: none;
+        border-color: #28a745;
+        box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.25);
+      }
+
+      .review-section .usage-frequency-group select:required:invalid {
+        border-color: #ff4d4f;
+      }
+
+      /* Responsive adjustments for usage frequency field */
+      @media screen and (max-width: 768px) {
+        .review-section .usage-frequency-group select {
+          max-width: 100%;
+        }
+      }
+      .star-rating-summary {
+        font-size: 1em;
+        color: #333;
+        display: flex;
+        align-items: center;
+      }
+      #averageRating .fa {
+        font-size: 1em;
+        color: #ccc;
+      }
+      #averageRating .fa.checked {
+        color: orange;
+      }
+      #ratingText {
+        font-size: 1em;
+        color: #ddd;
+      }
+
+      /* Rating Bars */
+      .bar-container {
+        width: 100%;
+        background-color: #f1f1f1;
+        text-align: center;
+        color: white;
+      }
+      .bar-5 {
+        width: 60%;
+        height: 18px;
+        background-color: #04aa6d;
+      }
+      .bar-4 {
+        width: 30%;
+        height: 18px;
+        background-color: #2196f3;
+      }
+      .bar-3 {
+        width: 10%;
+        height: 18px;
+        background-color: #00bcd4;
+      }
+      .bar-2 {
+        width: 4%;
+        height: 18px;
+        background-color: #ff9800;
+      }
+      .bar-1 {
+        width: 15%;
+        height: 18px;
+        background-color: #f44336;
+      }
+
+      /* Three Column Layout */
+      .side {
+        float: left;
+        width: 15%;
+        margin-top: 10px;
+      }
+      .middle {
+        float: left;
+        width: 70%;
+        margin-top: 10px;
+      }
+      .right {
+        text-align: right;
+      }
+      .row:after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+
+      /* Links - Fixed for visibility on dark backgrounds */
+      /* Default unvisited link state - white for contrast on dark bg */
+      a {
+        color: #ffffff !important; /* WCAG AA compliant on black (21:1 ratio) */
+        text-decoration: underline;
+        transition: color 0.2s ease; /* Smooth color transitions */
+      }
+
+      /* Hover state - yellow for brand consistency and visibility */
+      a:hover {
+        color: #ffee00 !important; /* WCAG AAA compliant on black (19.56:1 ratio) */
+        text-decoration: underline;
+      }
+
+      /* Visited state - green maintains visibility while indicating visited status */
+      a:visited {
+        color: #28a745 !important; /* WCAG AA compliant on black (5.45:1 ratio) */
+        text-decoration: underline;
+      }
+
+      /* Active state (during click) - green for feedback */
+      a:active {
+        color: #28a745 !important; /* WCAG AA compliant on black (5.45:1 ratio) */
+        text-decoration: underline;
+      }
+
+      /* Focus state - for keyboard navigation accessibility */
+      a:focus {
+        color: #ffee00 !important;
+        outline: 2px solid #ffee00;
+        outline-offset: 2px;
+        text-decoration: underline;
+      }
+
+      /* Remove Extra White Space */
+      #footer,
+      #copyright,
+      body,
+      #page-wrapper {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+      }
+      #footer {
+        padding-bottom: 1em !important;
+      }
+
+      /* Move ads below content when filtering is active */
+      .filtering-active .native-ad {
+        order: 9999;
+        margin-top: 3em;
+        position: relative;
+      }
+
+      /* Add separator and label before ads when filtering */
+      .filtering-active .native-ad:first-of-type::before {
+        content: "Sponsored Content";
+        position: absolute;
+        top: -3em;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #ffee00;
+        font-size: 0.9em;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        padding: 0.5em 2em;
+        background: #000000;
+        border: 1px solid #ffee00;
+        border-radius: 20px;
+        z-index: 10;
+      }
+
+      .filtering-active .native-ad:first-of-type::after {
+        content: "";
+        position: absolute;
+        top: -1.5em;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #ffee00 20%, #ffee00 80%, transparent);
+      }
+
+      .filtering-active .agency-info.compact {
+        order: 1;
+      }
+
+      /* Only show visible agencies when filtering */
+      .filtering-active .agency-info.compact[style*="display: none"] {
+        display: none !important;
+      }
+
+      /* Wrapper for filtering */
+      .content-wrapper {
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Profile Hub Container - Positioned Above Support Container */
+      .profile-hub-container {
+        position: fixed;
+        bottom: 90px;
+        right: 20px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+        z-index: 1000;
+      }
+
+      /* Profile Icon - Matching Gear Icon Style with Yellow Glow */
+      .profile-icon {
+        width: 50px;
+        height: 50px;
+        background: #ffee00;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow:
+          0 4px 12px rgba(255, 238, 0, 0.4),
+          0 0 20px rgba(255, 238, 0, 0.6),
+          0 0 40px rgba(255, 238, 0, 0.3);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none !important;
+        border: 2px solid #ffee00;
+        position: relative;
+      }
+
+      .profile-icon:hover {
+        background: #fff700;
+        transform: scale(1.1);
+        box-shadow:
+          0 6px 20px rgba(255, 238, 0, 0.6),
+          0 0 30px rgba(255, 238, 0, 0.8),
+          0 0 60px rgba(255, 238, 0, 0.5);
+      }
+
+      .profile-icon i {
+        font-size: 20px;
+        color: #000000;
+        transition: transform 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .profile-icon:hover i {
+        color: #333333;
+      }
+
+      /* Login Status Button - Positioned Beside Profile Icon */
+      /* Profile Hub Button - Shows Login or Username with Logout */
+      .profile-hub-btn {
+        background: #000000;
+        color: #ffee00;
+        border: 2px solid #ffee00;
+        border-radius: 25px;
+        padding: 12px 20px;
+        font-size: 13px;
+        font-weight: bold;
+        font-family: "Montserrat", Arial, sans-serif;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        box-shadow: 0 4px 12px rgba(255, 238, 0, 0.2);
+        letter-spacing: 1px;
+        white-space: nowrap;
+      }
+
+      .profile-hub-btn:hover {
+        background: #ffee00;
+        color: #000000;
+        border-color: #28a745;
+        box-shadow: 0 6px 20px rgba(255, 238, 0, 0.5);
+        transform: scale(1.05);
+      }
+
+      /* Logged-in state - green accent */
+      .profile-hub-btn.logged-in {
+        border-color: #28a745;
+        box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+      }
+
+      .profile-hub-btn.logged-in:hover {
+        background: #28a745;
+        color: #ffffff;
+        border-color: #ffee00;
+        box-shadow: 0 6px 20px rgba(40, 167, 69, 0.5);
+      }
+
+      /* Username display */
+      .profile-username {
+        font-size: 13px;
+      }
+
+      /* Logout text */
+      .profile-logout {
+        font-size: 11px;
+        opacity: 0.9;
+      }
+
+      /* Fixed Support Container - Horizontal Layout with Button Beside Gear Icon */
+      .support-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+        z-index: 1000;
+      }
+
+      /* Report Button - Positioned Beside Gear Icon */
+      .report-problem-btn {
+        background: #000000;
+        color: #ffee00 !important;
+        border: 2px solid #ffee00;
+        border-radius: 25px;
+        padding: 12px 20px;
+        font-size: 13px;
+        font-weight: bold;
+        font-family: "Montserrat", Arial, sans-serif;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(255, 238, 0, 0.2);
+        letter-spacing: 1px;
+        white-space: nowrap;
+      }
+
+      .report-problem-btn:hover {
+        background: #ffee00;
+        color: #000000 !important;
+        border-color: #28a745;
+        box-shadow: 0 6px 20px rgba(255, 238, 0, 0.5);
+        transform: scale(1.05);
+      }
+
+      /* Floating Gear Icon - Positioned Beside Button with Yellow Glow */
+      .floating-gear-icon {
+        width: 50px;
+        height: 50px;
+        background: #ffee00;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow:
+          0 4px 12px rgba(255, 238, 0, 0.4),
+          0 0 20px rgba(255, 238, 0, 0.6),
+          0 0 40px rgba(255, 238, 0, 0.3);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none !important;
+        border: 2px solid #ffee00;
+      }
+
+      .floating-gear-icon:hover {
+        background: #fff700;
+        transform: scale(1.1) rotate(90deg);
+        box-shadow:
+          0 6px 20px rgba(255, 238, 0, 0.6),
+          0 0 30px rgba(255, 238, 0, 0.8),
+          0 0 60px rgba(255, 238, 0, 0.5);
+      }
+
+      .floating-gear-icon i {
+        font-size: 20px;
+        color: #000000;
+        transition: transform 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .floating-gear-icon:hover i {
+        color: #333333;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .profile-hub-container {
+          bottom: 75px;
+          right: 15px;
+          gap: 12px;
+        }
+
+        .profile-icon {
+          width: 45px;
+          height: 45px;
+        }
+
+        .profile-icon i {
+          font-size: 18px;
+        }
+
+        .profile-hub-btn {
+          padding: 10px 16px;
+          font-size: 11px;
+        }
+
+        .profile-username {
+          font-size: 11px;
+        }
+
+        .profile-logout {
+          font-size: 10px;
+        }
+
+        .support-container {
+          bottom: 15px;
+          right: 15px;
+          gap: 12px;
+        }
+
+        .report-problem-btn {
+          padding: 10px 16px;
+          font-size: 11px;
+        }
+
+        .floating-gear-icon {
+          width: 45px;
+          height: 45px;
+        }
+
+        .floating-gear-icon i {
+          font-size: 18px;
+        }
+
+        .view-past-reviews-btn-semi {
+          width: 100%;
+          margin: 0.75em 0 0 0;
+        }
+
+        /* REMOVED: Orphaned CSS selector [onclick*="toggleReviewSection"] (HIGH-006 fix) */
+
+        .agency-info.compact.condensed::after,
+        .agency-info.compact.expanded::after {
+          position: static;
+          display: block;
+          margin-top: 1.1em;
+          transform: none;
+          left: auto;
+          bottom: auto;
+          text-align: center;
+        }
+
+        /* Responsive button positioning */
+        .agency-wrapper {
+          flex-direction: column;
+        }
+
+        .view-past-reviews-btn {
+          position: static;
+          display: block;
+          margin: 0.5em auto 0.5em 0;
+          width: auto;
+        }
+
+        .agency-info.compact.expanded::after {
+          position: static;
+          display: block;
+          text-align: center;
+          margin-top: 0.5em;
+        }
+
+        .past-reviews-box {
+          max-height: 400px;
+        }
+      }
+      @media (max-width: 400px) {
+        .side,
+        .middle {
+          width: 100%;
+        }
+        .right {
+          display: none;
+        }
+
+        .condensed-rating {
+          font-size: 0.8em;
+        }
+      }
+
+      /* Filtered Layout - Ad Repositioning */
+      .filtering-active .native-ad.filtered-layout {
+        /* Move ads below agencies during filtering */
+        order: 9999; /* Push ads to the bottom */
+        max-width: 100%;
+        margin: 1em auto;
+        padding: 1em;
+        opacity: 0.9;
+        transition: all 0.3s ease;
+      }
+
+      .filtering-active .native-ad.filtered-layout:hover {
+        opacity: 1;
+      }
+
+      .filtering-active .native-ad.filtered-layout .ad-image {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* Compact ad styling in filtered mode */
+      .filtering-active .native-ad.filtered-layout .ad-content {
+        font-size: 0.85em;
+      }
+
+      .filtering-active .native-ad.filtered-layout .ad-title {
+        font-size: 1.1em;
+      }
+
+      /* Agency cards prioritized during filtering */
+      .filtering-active .agency-info {
+        order: 1; /* Keep agencies at the top */
+      }
+
+      .filtering-active .agency-info.compact {
+        transition: none;
+      }
+
+      /* Make the container use flexbox for reordering */
+      .filtering-active {
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Button Size Increase - 20% across all buttons */
+      button[type="button"],
+      .btn,
+      .btn-primary,
+      .btn-secondary,
+      input[type="submit"],
+      input[type="button"] {
+        font-size: var(--agency-button-font-size) !important;
+        padding: var(--agency-button-padding-y) var(--agency-button-padding-x) !important;
+        border-radius: var(--agency-button-radius) !important;
+        margin: 0.8em 0.2em !important;
+      }
+
+      /* Ensure agency action buttons maintain spacing after size increase */
+      .agency-info button[type="button"] {
+        font-size: var(--agency-button-font-size) !important;
+      }
+
+      .view-past-reviews-btn-semi {
+        font-size: var(--agency-button-font-size) !important;
+      }
+
+      /* Clear Filters button */
+      .btn.btn-primary[data-action="clear-filters"] {
+        font-size: var(--agency-button-font-size) !important;
+      }
+
+      /* ========================================
+         JAMAICA FREE EXPRESSION BANNER
+         Matches styling from share-experience.html
+         ======================================== */
+
+      /* Jamaica Free Expression Banner - Same styling as U.S. banner */
+      .jamaica-banner {
+        background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+        border: 3px solid #ffee00;
+        border-radius: 12px;
+        padding: 1.5em;
+        margin: 2em auto;
+        max-width: 900px;
+        text-align: center;
+        box-shadow: 0 6px 20px rgba(255, 238, 0, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .jamaica-banner::before {
+        content: "🇯🇲";
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        font-size: 8em;
+        opacity: 0.1;
+      }
+
+      .jamaica-banner h3 {
+        color: #ffee00;
+        font-size: 1.4em;
+        margin: 0 0 0.5em 0;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5em;
+      }
+
+      .jamaica-banner h3 i {
+        color: #28a745;
+      }
+
+      .jamaica-banner p {
+        color: #ffffff;
+        line-height: 1.7;
+        margin: 0.5em 0;
+        font-size: 1em;
+      }
+
+      .jamaica-banner strong {
+        color: #ffee00;
+        font-weight: bold;
+      }
+
+      .jamaica-banner .learn-more-link {
+        margin-top: 1em !important;
+        --btn-standard-padding-y: 0.7em;
+        --btn-standard-padding-x: 1.8em;
+        --btn-standard-font-size: 1.05em;
+        /* Explicit fallbacks in case CSS variables don't work */
+        padding: 0.7em 1.8em !important;
+        font-size: 1.05em !important;
+      }
+
+      /* Force correct colors for btn-primary within jamaica-banner */
+      .jamaica-banner .learn-more-link.btn-primary {
+        background: #ffee00 !important;
+        color: #000000 !important;
+      }
+
+      .jamaica-banner .learn-more-link.btn-primary:hover,
+      .jamaica-banner .learn-more-link.btn-primary:focus {
+        background: #fff45a !important;
+        color: #000000 !important;
+      }
+
+      /* Jamaica Legal Rights Modal */
+      /* See docs/know-your-rights-modal.md for refinement details */
+      .jamaica-legal-modal .modal-content {
+        max-width: 600px;
+        padding: 2em;
+      }
+
+      .jamaica-legal-modal h2 {
+        color: #ffee00;
+        text-align: left;
+        margin-bottom: 1em;
+      }
+
+      .jamaica-legal-modal h3 {
+        color: #ffee00;
+        margin-top: 1.2em;
+        margin-bottom: 0.6em;
+        font-size: 1.1em;
+        text-align: left;
+      }
+
+      .jamaica-legal-modal p {
+        color: #ffffff;
+        line-height: 1.6;
+        margin-bottom: 1em;
+        text-align: left;
+      }
+
+      .jamaica-legal-modal ul {
+        color: #ffffff;
+        line-height: 1.6;
+        margin: 0.5em 0 1em 2em;
+        text-align: left;
+      }
+
+      .jamaica-legal-modal li {
+        margin-bottom: 0.4em;
+      }
+
+      .jamaica-legal-modal .modal-disclaimer {
+        font-size: 0.85em;
+        color: #cccccc;
+        margin-top: 1.5em;
+        text-align: left;
+      }
+
+      .jamaica-legal-modal .close-modal-btn {
+        display: block;
+        margin: 2em auto 0;
+        padding: 0.8em 2.5em;
+        background: #28a745;
+        color: #ffffff;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+      }
+
+      .jamaica-legal-modal .close-modal-btn:hover,
+      .jamaica-legal-modal .close-modal-btn:focus {
+        background: #218838;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+      }
+
+      /* Responsive adjustments for Jamaica banner */
+      @media screen and (max-width: 768px) {
+        .jamaica-banner {
+          padding: 1.2em;
+          margin: 1.5em 1em;
+        }
+
+        .jamaica-banner h3 {
+          font-size: 1.2em;
+        }
+
+        .jamaica-banner p {
+          font-size: 0.95em;
+        }
+
+      }
+
+      /* Modal styles now handled by modal-standard.css - See CLAUDE.md */
+      /* TOS modal styles now handled by scripts/tos-modal.js - See CLAUDE.md */
+      /* Removed conflicting inline TOS styles (2025-11-02) to ensure consistency across all pages */
+			/* User HUD (Heads-Up Display) Styles */
+			.user-hud {
+				position: fixed;
+				top: 20px;
+				right: 20px;
+				z-index: 9999;
+				animation: slideInFromRight 0.4s ease-out;
+			}
+
+			@keyframes slideInFromRight {
+				from {
+					opacity: 0;
+					transform: translateX(100px);
+				}
+				to {
+					opacity: 1;
+					transform: translateX(0);
+				}
+			}
+
+			.hud-content {
+				background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+				border: 2px solid #ffee00;
+				border-radius: 8px;
+				padding: 0.8em 1.5em;
+				display: flex;
+				align-items: center;
+				gap: 1.2em;
+				box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 238, 0, 0.2);
+				backdrop-filter: blur(10px);
+			}
+
+			.hud-greeting {
+				color: #ffffff;
+				font-size: 0.95em;
+				font-weight: 500;
+				white-space: nowrap;
+			}
+
+			.hud-greeting strong {
+				color: #ffee00;
+				font-weight: 700;
+			}
+
+			.hud-logout-btn {
+				background: #ffee00;
+				color: #000000;
+				border: none;
+				border-radius: 6px;
+				padding: 0.6em 1.4em;
+				font-weight: bold;
+				font-size: 0.9em;
+				cursor: pointer;
+				transition: all 0.3s ease;
+				display: flex;
+				align-items: center;
+				gap: 0.5em;
+				white-space: nowrap;
+				box-shadow: 0 2px 8px rgba(255, 238, 0, 0.3);
+			}
+
+			.hud-logout-btn:hover {
+				background: #ffffff;
+				transform: translateY(-2px);
+				box-shadow: 0 4px 12px rgba(255, 238, 0, 0.5);
+			}
+
+			.hud-logout-btn:active {
+				transform: translateY(0);
+			}
+
+			.hud-logout-btn:focus {
+				outline: 2px solid #ffee00;
+				outline-offset: 2px;
+			}
+
+			/* Responsive HUD Styles */
+			@media screen and (max-width: 768px) {
+				.user-hud {
+					top: 15px;
+					right: 15px;
+				}
+
+				.hud-content {
+					padding: 0.7em 1.2em;
+					gap: 1em;
+				}
+
+				.hud-greeting {
+					font-size: 0.85em;
+				}
+
+				.hud-logout-btn {
+					padding: 0.5em 1.2em;
+					font-size: 0.85em;
+				}
+			}
+
+			@media screen and (max-width: 480px) {
+				.user-hud {
+					top: 10px;
+					right: 10px;
+					left: 10px;
+				}
+
+				.hud-content {
+					flex-direction: column;
+					align-items: stretch;
+					gap: 0.8em;
+					padding: 0.8em 1em;
+				}
+
+				.hud-greeting {
+					text-align: center;
+					font-size: 0.85em;
+				}
+
+				.hud-logout-btn {
+					width: 100%;
+					justify-content: center;
+					padding: 0.7em 1em;
+				}
+			}
+

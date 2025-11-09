@@ -1,0 +1,735 @@
+/**
+ * TOS Modal Styles - ORIGINAL DESIGN
+ * Extracted from tos-modal.js inline styles (lines 100-538)
+ * CSP-Compliant (No inline style injection)
+ * Restored: 2025-11-05
+ * Purpose: Match original TOS modal appearance from screenshot
+ */
+
+.tos-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: tosModalFadeIn 0.3s ease-out;
+}
+
+@keyframes tosModalFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.tos-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+}
+
+.tos-modal-content {
+    position: relative;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    animation: tosModalSlideUp 0.3s ease-out;
+    border: 3px solid #ffee00;
+}
+
+@keyframes tosModalSlideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.tos-modal-header {
+    padding: 1.5em;
+    border-bottom: 2px solid #ffee00;
+    background: linear-gradient(135deg, #ffee00 0%, #fff700 100%);
+}
+
+.tos-modal-header h2 {
+    margin: 0;
+    color: #000;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.tos-modal-body {
+    padding: 1.5em;
+    overflow-y: auto;
+    flex: 1;
+    color: #333;
+}
+
+.tos-modal-body p {
+    margin: 0 0 1em 0;
+    line-height: 1.6;
+}
+
+.tos-summary {
+    background: #f9f9f9;
+    border-left: 4px solid #28a745;
+    padding: 1em;
+    margin: 1em 0;
+    border-radius: 4px;
+}
+
+.tos-summary h3 {
+    margin-top: 0;
+    color: #28a745;
+    font-size: 1.1em;
+}
+
+.tos-summary ul {
+    margin: 0.5em 0 0 0;
+    padding-left: 1.5em;
+}
+
+.tos-summary li {
+    margin: 0.5em 0;
+    line-height: 1.6;
+}
+
+.tos-agreement {
+    margin: 1.5em 0;
+    padding: 1em;
+    background: #fff9e6;
+    border: 2px solid #ffee00;
+    border-radius: 8px;
+}
+
+/* Checkbox Container - Override modal-standard.css center alignment */
+.tos-modal .tos-checkbox-container,
+.tos-modal-content .tos-checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75em;
+    margin: 1.5em 0;
+    text-align: left !important; /* Override modal-standard.css */
+}
+
+/* Button Container - Override modal-standard.css center alignment */
+.tos-modal .tos-modal-buttons,
+.tos-modal-content .tos-modal-buttons {
+    display: flex;
+    gap: 1em;
+    justify-content: flex-end;
+    margin-top: 1.5em;
+    text-align: left !important; /* Override modal-standard.css */
+}
+
+.tos-modal .tos-checkbox-label,
+.tos-modal-content .tos-checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+/* Custom checkbox styling for better visibility */
+.tos-modal .tos-checkbox,
+.tos-modal-content .tos-checkbox {
+    position: relative;
+    margin: 0.2em 0.5em 0 0;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    min-width: 24px; /* Prevent shrinking */
+    min-height: 24px;
+    flex-shrink: 0;
+    appearance: none; /* Remove default styling */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: #ffffff !important;
+    border: 2.5px solid #28a745 !important;
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+/* Hover state for checkbox */
+.tos-modal .tos-checkbox:hover,
+.tos-modal-content .tos-checkbox:hover {
+    border-color: #218838 !important;
+    background: #f0fff4 !important;
+    transform: scale(1.05);
+}
+
+/* Focus state for accessibility */
+.tos-modal .tos-checkbox:focus,
+.tos-modal-content .tos-checkbox:focus {
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+    border-color: #28a745 !important;
+}
+
+/* Checked state - adds visible checkmark */
+.tos-modal .tos-checkbox:checked,
+.tos-modal-content .tos-checkbox:checked {
+    background: #28a745 !important;
+    border-color: #28a745 !important;
+}
+
+/* Custom checkmark using CSS (visible when checked) */
+.tos-modal .tos-checkbox:checked::after,
+.tos-modal-content .tos-checkbox:checked::after {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 3px;
+    width: 6px;
+    height: 11px;
+    border: solid #ffffff;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+    display: block;
+}
+
+/* Disabled state */
+.tos-modal .tos-checkbox:disabled,
+.tos-modal-content .tos-checkbox:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.tos-modal .tos-checkbox-label span,
+.tos-modal-content .tos-checkbox-label span {
+    line-height: 1.6;
+    color: #2d3748 !important; /* Dark gray text - consistent across all pages */
+}
+
+.tos-modal .tos-checkbox-label a,
+.tos-modal-content .tos-checkbox-label a {
+    color: #28a745 !important;
+    text-decoration: none;
+    border-bottom: 1px dotted #28a745;
+    font-weight: bold;
+}
+
+.tos-modal .tos-checkbox-label a:hover,
+.tos-modal-content .tos-checkbox-label a:hover {
+    color: #ffee00 !important;
+    border-bottom-color: #ffee00;
+}
+
+.tos-modal-footer {
+    padding: 1em 1.5em;
+    border-top: 1px solid #ddd;
+    display: flex;
+    gap: 1em;
+    justify-content: flex-end;
+    align-items: center;
+    background: #f5f5f5;
+}
+
+/* Fallback for browsers without gap support */
+.tos-modal-footer > * + * {
+    margin-left: 1em;
+}
+
+@supports (gap: 1em) {
+    .tos-modal-footer > * + * {
+        margin-left: 0;
+    }
+}
+
+/* Button base styles - responsive text handling */
+/* See CLAUDE.md - Security & Design Best Practices Mandate */
+/* Updated: 2025-10-31 - Reduced font size with nowrap to prevent text breaking */
+/* Updated: 2025-11-02 - Fixed to use absolute sizing for consistency across pages */
+/* Updated: 2025-11-02 - Increased specificity to override page-specific CSS */
+.tos-modal .tos-btn,
+.tos-modal-content .tos-btn {
+    padding: 10px 14px !important; /* Absolute padding instead of em */
+    border: none !important;
+    border-radius: 6px !important;
+    font-size: 14px !important; /* Absolute font size for consistency */
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important; /* Absolute gap instead of em */
+    text-align: center !important;
+    line-height: 1.2 !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important; /* Prevent text wrapping */
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+/* Icon sizing in buttons */
+.tos-modal .tos-btn i,
+.tos-modal-content .tos-btn i {
+    flex-shrink: 0 !important; /* Icons don't shrink */
+    font-size: 13px !important; /* Absolute size for icons */
+}
+
+.tos-modal .tos-btn:focus,
+.tos-modal-content .tos-btn:focus {
+    outline: 2px solid #28a745 !important;
+    outline-offset: 2px !important;
+}
+
+.tos-modal .tos-btn-primary,
+.tos-modal-content .tos-btn-primary {
+    background: #28a745 !important;
+    color: #fff !important;
+}
+
+.tos-modal .tos-btn-primary:not(:disabled):hover,
+.tos-modal-content .tos-btn-primary:not(:disabled):hover {
+    background: #218838 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3) !important;
+}
+
+.tos-modal .tos-btn-primary:disabled,
+.tos-modal-content .tos-btn-primary:disabled {
+    background: #ccc !important;
+    color: #888 !important;
+    cursor: not-allowed !important;
+    opacity: 0.6 !important;
+}
+
+.tos-modal .tos-btn-secondary,
+.tos-modal-content .tos-btn-secondary {
+    background: #ffee00 !important; /* Yellow background */
+    color: #000 !important; /* Black text for contrast */
+    border: 2px solid #ffee00 !important;
+}
+
+.tos-modal .tos-btn-secondary:hover,
+.tos-modal-content .tos-btn-secondary:hover {
+    background: #fff700 !important; /* Brighter yellow on hover */
+    border-color: #fff700 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(255, 238, 0, 0.4) !important;
+}
+
+.tos-modal .tos-btn-danger,
+.tos-modal-content .tos-btn-danger {
+    background: #dc3545 !important;
+    color: #fff !important;
+    border: 2px solid #dc3545 !important;
+}
+
+.tos-modal .tos-btn-danger:hover,
+.tos-modal-content .tos-btn-danger:hover {
+    background: #c82333 !important;
+    border-color: #bd2130 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4) !important;
+}
+
+/* Mobile responsive - Tablet and below */
+@media (max-width: 768px) {
+    .tos-modal-content {
+        width: 95%;
+        max-height: 95vh;
+    }
+
+    .tos-modal-header,
+    .tos-modal-body,
+    .tos-modal-footer {
+        padding: 1em;
+    }
+
+    .tos-modal-header h2 {
+        font-size: 1.2em;
+    }
+
+    .tos-modal-footer {
+        flex-direction: column-reverse; /* Stack buttons vertically */
+        gap: 0.75em;
+    }
+
+    /* Full width buttons on mobile for better usability */
+    .tos-modal .tos-btn,
+    .tos-modal-content .tos-btn {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 12px 14px !important; /* Absolute padding for mobile */
+        font-size: 14px !important; /* Keep consistent with desktop */
+        text-align: center !important;
+        white-space: normal !important; /* Allow wrapping if needed */
+        min-height: 44px !important; /* Touch-friendly minimum size */
+    }
+
+    /* Ensure checkbox is larger on mobile for easier tapping */
+    .tos-checkbox {
+        width: 26px;
+        height: 26px;
+        min-width: 26px;
+        min-height: 26px;
+        margin-right: 0.75em;
+    }
+
+    /* Adjust checkmark position for larger mobile checkbox */
+    .tos-checkbox:checked::after {
+        left: 8px;
+        top: 3px;
+    }
+
+    .tos-summary {
+        padding: 0.75em;
+    }
+
+    .tos-summary ul {
+        padding-left: 1.2em;
+    }
+
+    .tos-agreement {
+        padding: 0.75em;
+    }
+
+    /* Mobile-friendly checkbox container */
+    .tos-modal .tos-checkbox-container,
+    .tos-modal-content .tos-checkbox-container {
+        gap: 0.75em;
+        align-items: flex-start;
+    }
+
+    /* Mobile-friendly button container - stack vertically */
+    .tos-modal .tos-modal-buttons,
+    .tos-modal-content .tos-modal-buttons {
+        flex-direction: column;
+        gap: 0.75em;
+    }
+
+    .tos-modal .tos-modal-buttons button,
+    .tos-modal-content .tos-modal-buttons button {
+        width: 100%;
+    }
+}
+
+/* Extra small devices - Enhanced button text handling */
+@media (max-width: 480px) {
+    .tos-modal-content {
+        width: 98%;
+        max-height: 98vh;
+        border-radius: 8px;
+    }
+
+    .tos-modal-header,
+    .tos-modal-body,
+    .tos-modal-footer {
+        padding: 0.75em;
+    }
+
+    .tos-modal-header h2 {
+        font-size: 1.1em;
+    }
+
+    .tos-summary h3 {
+        font-size: 1em;
+    }
+
+    /* Optimized button sizing for small screens */
+    .tos-modal .tos-btn,
+    .tos-modal-content .tos-btn {
+        padding: 12px 14px !important; /* Absolute padding - consistent with desktop */
+        font-size: 13px !important; /* Slightly smaller for very small screens */
+        min-height: 44px !important; /* Maintain touch target */
+        gap: 4px !important; /* Absolute gap - consistent */
+    }
+
+    /* Slightly smaller icon on very small screens */
+    .tos-modal .tos-btn i,
+    .tos-modal-content .tos-btn i {
+        font-size: 12px !important; /* Absolute size for icon */
+    }
+
+    /* Ensure checkbox label text doesn't overflow */
+    .tos-modal .tos-checkbox-label,
+    .tos-modal-content .tos-checkbox-label {
+        font-size: 0.9em;
+    }
+
+    .tos-modal .tos-checkbox-label span,
+    .tos-modal-content .tos-checkbox-label span {
+        line-height: 1.5;
+        color: #2d3748 !important; /* Maintain dark text on mobile */
+    }
+}
+
+/* Prevent body scroll when modal is open */
+body.tos-modal-open {
+    overflow: hidden;
+}
+
+/* ================================================
+   REVIEW SUBMISSION AGREEMENT MODAL
+   Separate styling for review TOS (black theme)
+   Used in agencies.html and share-experience.html
+   ================================================ */
+
+/* Review TOS Modal Content */
+.review-tos-content {
+    background: #000000 !important; /* Black background */
+    border: 3px solid #ffee00 !important; /* Yellow border */
+    border-radius: 10px !important;
+    padding: 2.5em 2em !important;
+    max-width: 600px !important;
+    width: 90% !important;
+    margin: 5% auto !important;
+    text-align: center !important;
+    box-shadow: 0 10px 40px rgba(255, 238, 0, 0.4) !important;
+}
+
+/* Review TOS Title */
+.review-tos-content h2 {
+    color: #ffee00 !important; /* Yellow title */
+    font-size: 1.5em !important;
+    font-weight: bold !important;
+    margin: 0 0 1.5em 0 !important;
+    text-align: center !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5em !important;
+}
+
+.review-tos-content h2 i {
+    color: #ffee00 !important;
+}
+
+/* Review TOS Text Box */
+.review-tos-content .tos-text-box {
+    color: #ffffff !important; /* White text */
+    text-align: left !important; /* LEFT ALIGNED */
+    margin-bottom: 1.5em !important;
+    line-height: 1.6 !important;
+}
+
+.review-tos-content .tos-text-box p {
+    color: #ffffff !important;
+    margin: 0 0 0.75em 0 !important;
+    text-align: left !important;
+}
+
+.review-tos-content .tos-text-box strong {
+    color: #ffee00 !important; /* Yellow emphasis */
+}
+
+.review-tos-content .tos-text-box ul {
+    list-style: disc !important; /* Show bullets */
+    padding-left: 1.5em !important; /* Indent bullets */
+    margin: 1em 0 !important;
+    text-align: left !important; /* LEFT ALIGNED */
+}
+
+.review-tos-content .tos-text-box li {
+    color: #cccccc !important; /* Light gray for list items */
+    margin: 0.5em 0 !important;
+    line-height: 1.6 !important;
+    text-align: left !important;
+}
+
+.review-tos-content .tos-text-box li strong {
+    color: #ffffff !important; /* White for strong text in lists */
+}
+
+/* Disclaimer text */
+.review-tos-content .tos-text-box p:last-child {
+    font-size: 0.85em !important;
+    color: #999999 !important; /* Dimmed gray */
+    margin-top: 1em !important;
+}
+
+/* Review TOS Checkbox Container */
+.review-tos-content .tos-checkbox-container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important; /* LEFT ALIGNED */
+    gap: 0.75em !important;
+    margin: 1.5em 0 !important;
+}
+
+.review-tos-content .tos-checkbox-container input[type="checkbox"] {
+    /* Custom styled checkbox - visible and functional */
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px !important;
+    min-height: 22px !important;
+    border: 2.5px solid #ffee00 !important; /* Yellow border */
+    background: #000000 !important; /* Black background */
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    flex-shrink: 0 !important;
+    position: relative !important;
+    transition: all 0.2s ease !important;
+}
+
+.review-tos-content .tos-checkbox-container input[type="checkbox"]:hover {
+    background: #1a1a1a !important; /* Lighter black on hover */
+    border-color: #fff700 !important; /* Brighter yellow on hover */
+}
+
+.review-tos-content .tos-checkbox-container input[type="checkbox"]:checked {
+    background: #ffee00 !important; /* Yellow when checked */
+    border-color: #ffee00 !important;
+}
+
+/* Checkmark inside checkbox */
+.review-tos-content .tos-checkbox-container input[type="checkbox"]:checked::after {
+    content: '' !important;
+    position: absolute !important;
+    left: 6px !important;
+    top: 2px !important;
+    width: 6px !important;
+    height: 11px !important;
+    border: solid #000000 !important; /* Black checkmark */
+    border-width: 0 3px 3px 0 !important;
+    transform: rotate(45deg) !important;
+    display: block !important;
+}
+
+.review-tos-content .tos-checkbox-container label {
+    color: #ffffff !important;
+    cursor: pointer !important;
+    font-size: 0.95em !important;
+    user-select: none !important;
+}
+
+/* Review TOS Buttons */
+.review-tos-content .tos-modal-buttons {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 1em !important;
+    margin-top: 1.5em !important;
+}
+
+.review-tos-content .tos-modal-buttons button {
+    min-width: 250px !important;
+    padding: 0.75em 1.5em !important;
+    font-size: 0.95em !important;
+    font-weight: bold !important;
+    border-radius: 25px !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    text-transform: uppercase !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5em !important;
+}
+
+/* Accept Button (disabled state) */
+.review-tos-content .btn-accept {
+    background: #666666 !important;
+    color: #999999 !important;
+    cursor: not-allowed !important;
+}
+
+.review-tos-content .btn-accept:not(:disabled) {
+    background: #4CAF50 !important;
+    color: #ffffff !important;
+    cursor: pointer !important;
+}
+
+.review-tos-content .btn-accept:not(:disabled):hover {
+    background: #45a049 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4) !important;
+}
+
+/* Decline Button */
+.review-tos-content .btn-decline {
+    background: #f44336 !important;
+    color: #ffffff !important;
+}
+
+.review-tos-content .btn-decline:hover {
+    background: #da190b !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4) !important;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .review-tos-content {
+        width: 95% !important;
+        padding: 2em 1.5em !important;
+    }
+
+    .review-tos-content h2 {
+        font-size: 1.3em !important;
+    }
+
+    .review-tos-content .tos-text-box {
+        font-size: 0.9em !important;
+    }
+
+    .review-tos-content .tos-modal-buttons button {
+        width: 100% !important;
+        min-width: unset !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .review-tos-content {
+        width: 98% !important;
+        padding: 1.5em 1em !important;
+    }
+
+    .review-tos-content h2 {
+        font-size: 1.2em !important;
+        flex-direction: column !important;
+        gap: 0.3em !important;
+    }
+
+    .review-tos-content .tos-text-box {
+        font-size: 0.85em !important;
+    }
+
+    .review-tos-content .tos-checkbox-container {
+        flex-direction: row !important;
+        align-items: flex-start !important;
+        justify-content: flex-start !important; /* Maintain left alignment on mobile */
+    }
+
+    /* Larger checkbox for easier tapping on mobile */
+    .review-tos-content .tos-checkbox-container input[type="checkbox"] {
+        width: 24px !important;
+        height: 24px !important;
+        min-width: 24px !important;
+        min-height: 24px !important;
+    }
+
+    /* Adjust checkmark position for larger mobile checkbox */
+    .review-tos-content .tos-checkbox-container input[type="checkbox"]:checked::after {
+        left: 7px !important;
+        top: 3px !important;
+    }
+}

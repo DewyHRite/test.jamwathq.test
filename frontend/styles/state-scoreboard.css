@@ -1,0 +1,1033 @@
+/*
+ * State Scoreboard Styling
+ * See docs/state-scoreboard.md for full documentation
+ * Redesigned: 2025-10-30
+ */
+
+/* ================================================
+   CSP COMPLIANCE FIX - 2025-10-31
+   Moved inline styles to external CSS per CLAUDE.md
+   ================================================ */
+
+/* Header background image (was inline style) */
+body.scoreboard-page #header.wrapper,
+.scoreboard-page #header.wrapper,
+.scoreboard-page #header {
+    background-image: url("../assets/images/wp4013673.jpg") !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+/* Modal hidden by default (was inline style="display: none") */
+#reviews-popup {
+    display: none;
+}
+
+/* ================================================
+   THEME VARIABLES (scoped to scoreboard wrapper)
+   ================================================ */
+/* See CLAUDE.md - Security & Design Best Practices Mandate */
+/* Updated: 2025-10-31 - Changed background to green (#009b3a) per user request */
+.wrapper.scoreboard-theme {
+    --scoreboard-bg: #009b3a;
+    --scoreboard-panel: #111111;
+    --scoreboard-panel-alt: #181818;
+    --scoreboard-border: #1f1f1f;
+    --scoreboard-border-strong: #2e2e2e;
+    --scoreboard-text-primary: #f7f7f7;
+    --scoreboard-text-secondary: #c7c7c7;
+    --scoreboard-text-tertiary: #8a8a8a;
+    --scoreboard-gold: #ffee00;
+    --scoreboard-gold-dark: #d1c300;
+    --scoreboard-green: #28a745;
+    --scoreboard-green-dark: #1f7f32;
+    --scoreboard-danger: #ff4d4f;
+    --scoreboard-focus: rgba(255, 238, 0, 0.35);
+    --scoreboard-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    --scoreboard-radius-sm: 10px;
+    --scoreboard-radius-md: 14px;
+    --scoreboard-radius-lg: 18px;
+    --scoreboard-spacing-xs: 0.35rem;
+    --scoreboard-spacing-sm: 0.65rem;
+    --scoreboard-spacing-md: 1.15rem;
+    --scoreboard-spacing-lg: 1.75rem;
+    --scoreboard-spacing-xl: 2.5rem;
+    --scoreboard-spacing-2xl: 3.5rem;
+    --scoreboard-font-sans: "Montserrat", "Segoe UI", Roboto, Arial, sans-serif;
+    --scoreboard-transition-fast: 120ms cubic-bezier(0.4, 0, 0.2, 1);
+    --scoreboard-transition-base: 220ms cubic-bezier(0.4, 0, 0.2, 1);
+    --scoreboard-shadow-focus: 0 0 0 3px rgba(255, 238, 0, 0.25);
+}
+
+.wrapper.scoreboard-theme {
+    background: var(--scoreboard-bg);
+    color: var(--scoreboard-text-primary);
+    padding-bottom: var(--scoreboard-spacing-2xl);
+}
+
+/* See CLAUDE.md - Security & Design Best Practices Mandate */
+/* Title styling for scoreboard theme wrapper */
+/* Updated: 2025-10-31 - Removed gold color per theme requirements */
+.wrapper.scoreboard-theme .title {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--scoreboard-spacing-md);
+}
+
+/* See CLAUDE.md - Security & Design Best Practices Mandate */
+/* Button hover behavior override for scoreboard theme */
+/* Updated: 2025-10-31 - Override main.css #ffee00 background, preserve hover responsiveness */
+.wrapper.scoreboard-theme input[type="button"]:hover,
+.wrapper.scoreboard-theme input[type="submit"]:hover,
+.wrapper.scoreboard-theme input[type="reset"]:hover,
+.wrapper.scoreboard-theme button:hover:not(.scoreboard-filter-button):not(.scoreboard-tab-button):not(.scoreboard-modal-close),
+.wrapper.scoreboard-theme .button:hover {
+    background-color: transparent;
+    opacity: 0.85;
+    transform: translateY(-2px);
+    transition: all var(--scoreboard-transition-fast);
+}
+
+/* ================================================
+   LAYOUT WRAPPER
+   ================================================ */
+.scoreboard-shell {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--scoreboard-spacing-md) var(--scoreboard-spacing-2xl);
+    font-family: var(--scoreboard-font-sans);
+}
+
+/* ================================================
+   HERO / INTRO PANEL
+   ================================================ */
+/* See CLAUDE.md - Security & Design Best Practices Mandate */
+/* Updated: 2025-10-31 - Changed background to pure black (#000000) per user request */
+.scoreboard-hero {
+    background: #000000;
+    border: 1px solid var(--scoreboard-border-strong);
+    border-radius: var(--scoreboard-radius-lg);
+    box-shadow: var(--scoreboard-shadow);
+    padding: var(--scoreboard-spacing-xl) var(--scoreboard-spacing-lg);
+    margin-bottom: var(--scoreboard-spacing-xl);
+    position: relative;
+    overflow: hidden;
+}
+
+.scoreboard-hero::before,
+.scoreboard-hero::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.18;
+    filter: blur(0.5px);
+    pointer-events: none;
+}
+
+.scoreboard-hero::before {
+    width: 340px;
+    height: 340px;
+    background: radial-gradient(circle at center, rgba(255, 238, 0, 0.45), transparent 65%);
+    right: -140px;
+    top: -120px;
+}
+
+.scoreboard-hero::after {
+    width: 260px;
+    height: 260px;
+    background: radial-gradient(circle at center, rgba(40, 167, 69, 0.35), transparent 68%);
+    left: -120px;
+    bottom: -140px;
+}
+
+.scoreboard-hero-header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.scoreboard-hero-title {
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    font-weight: 700;
+    margin-bottom: var(--scoreboard-spacing-sm);
+    color: var(--scoreboard-gold);
+}
+
+.scoreboard-hero-subtitle {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--scoreboard-text-secondary);
+    max-width: 760px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.scoreboard-hero-meta {
+    margin-top: var(--scoreboard-spacing-lg);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--scoreboard-spacing-md);
+    justify-content: center;
+}
+
+.scoreboard-hero-chip {
+    background: rgba(255, 238, 0, 0.08);
+    border: 1px solid rgba(255, 238, 0, 0.35);
+    border-radius: 999px;
+    color: var(--scoreboard-gold);
+    padding: 0.65rem 1.35rem;
+    font-weight: 600;
+    box-shadow: 0 8px 20px rgba(255, 238, 0, 0.18);
+}
+
+/* ================================================
+   KEY METRICS STRIP
+   ================================================ */
+.scoreboard-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: var(--scoreboard-spacing-md);
+    margin-top: var(--scoreboard-spacing-lg);
+}
+
+.scoreboard-metric {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--scoreboard-border);
+    border-radius: var(--scoreboard-radius-md);
+    padding: var(--scoreboard-spacing-md);
+    text-align: center;
+    transition: transform var(--scoreboard-transition-base);
+}
+
+.scoreboard-metric:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 28px rgba(0, 0, 0, 0.28);
+}
+
+.scoreboard-metric-label {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    color: var(--scoreboard-text-tertiary);
+    margin-bottom: var(--scoreboard-spacing-xs);
+}
+
+.scoreboard-metric-value {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 700;
+}
+
+.scoreboard-metric-value--highlight {
+    color: var(--scoreboard-gold);
+}
+
+/* ================================================
+   CONTROLS: SEARCH, FILTERS, SORTING
+   ================================================ */
+/* See CLAUDE.md - Security & Design Best Practices Mandate */
+/* Updated: 2025-10-31 - Changed to pure black background and border per user request */
+.scoreboard-controls {
+    background: #000000;
+    border: 1px solid #000000;
+    border-radius: var(--scoreboard-radius-lg);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+    padding: var(--scoreboard-spacing-lg);
+    margin-bottom: var(--scoreboard-spacing-xl);
+}
+
+.scoreboard-search {
+    position: relative;
+    margin-bottom: var(--scoreboard-spacing-md);
+}
+
+.scoreboard-search-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.scoreboard-search-input {
+    width: 100%;
+    padding: 1rem 1.1rem 1rem 3.25rem;
+    border-radius: 999px;
+    border: 1px solid var(--scoreboard-border-strong);
+    background: var(--scoreboard-panel-alt);
+    color: #ffffff; /* Bright white for better readability */
+    font-size: 1rem;
+    font-weight: 600; /* Bolder text for visibility */
+    transition: border var(--scoreboard-transition-fast), box-shadow var(--scoreboard-transition-fast);
+}
+
+/* Placeholder text styling */
+.scoreboard-search-input::placeholder {
+    color: #c7c7c7; /* Light gray for placeholder */
+    font-weight: 500;
+    opacity: 1;
+}
+
+.scoreboard-search-input:focus {
+    outline: none;
+    border-color: var(--scoreboard-gold);
+    box-shadow: var(--scoreboard-shadow-focus);
+}
+
+.scoreboard-search-icon {
+    position: absolute;
+    top: 50%;
+    left: 1.1rem;
+    transform: translateY(-50%);
+    color: var(--scoreboard-text-tertiary);
+    font-size: 1.1rem;
+}
+
+.scoreboard-controls-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--scoreboard-spacing-sm);
+    align-items: center;
+    justify-content: space-between;
+}
+
+.scoreboard-filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--scoreboard-spacing-sm);
+}
+
+.scoreboard-filter-button {
+    padding: 0.65rem 1.4rem;
+    border-radius: 999px;
+    border: 1px solid var(--scoreboard-border-strong);
+    background: transparent;
+    color: var(--scoreboard-text-secondary);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--scoreboard-transition-fast);
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.scoreboard-filter-button:hover,
+.scoreboard-filter-button:focus-visible {
+    border-color: var(--scoreboard-gold);
+    color: var(--scoreboard-gold);
+    box-shadow: var(--scoreboard-shadow-focus);
+}
+
+.scoreboard-filter-button.is-active {
+    background: var(--scoreboard-gold);
+    border-color: var(--scoreboard-gold);
+    color: #000000;
+    box-shadow: 0 10px 22px rgba(255, 238, 0, 0.4);
+}
+
+.scoreboard-sort {
+    flex: 1 1 240px;
+    max-width: 280px;
+    position: relative;
+}
+
+.scoreboard-sort select {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border-radius: var(--scoreboard-radius-md);
+    border: 1px solid var(--scoreboard-border-strong);
+    background: #009b3a; /* Green background for high contrast */
+    color: #000000; /* Black text for maximum readability */
+    font-weight: 600;
+    cursor: pointer;
+    appearance: none;
+}
+
+/* Dropdown option styling for better readability */
+.scoreboard-sort select option {
+    background: #009b3a; /* Green background for dropdown options */
+    color: #000000; /* Black text for dropdown options */
+    font-weight: 600;
+}
+
+.scoreboard-sort::after {
+    content: "\f107";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    right: 0.95rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #000000; /* Black arrow icon to match text */
+}
+
+.scoreboard-results {
+    flex: 0 0 auto;
+    padding: 0.65rem 1.25rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(255, 238, 0, 0.22), rgba(40, 167, 69, 0.22));
+    color: var(--scoreboard-gold);
+    font-weight: 700;
+}
+
+/* ================================================
+   TAB NAVIGATION (GROUPS 1 & 2)
+   ================================================ */
+.scoreboard-tabs {
+    display: inline-flex;
+    gap: var(--scoreboard-spacing-sm);
+    margin-bottom: var(--scoreboard-spacing-lg);
+    flex-wrap: wrap;
+}
+
+.scoreboard-tab-button {
+    padding: 0.85rem 1.85rem;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    background: rgb(0 46 17); /* Dark green background */
+    color: var(--scoreboard-text-secondary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--scoreboard-transition-fast);
+    min-height: 44px;
+}
+
+.scoreboard-tab-button:hover,
+.scoreboard-tab-button:focus-visible {
+    border-color: var(--scoreboard-gold);
+    color: var(--scoreboard-gold);
+    box-shadow: var(--scoreboard-shadow-focus);
+}
+
+/* See CLAUDE.md - Security & Design Best Practices Mandate */
+/* Updated: 2025-10-31 - Black background for active state with gold accents */
+.scoreboard-tab-button.is-active {
+    color: var(--scoreboard-text-primary);
+    border-color: var(--scoreboard-gold);
+    box-shadow: 0 12px 26px rgba(255, 238, 0, 0.45);
+    background-color: black; /* Black background for active tab */
+}
+
+/* ================================================
+   SCOREBOARD GRID & CARDS
+   ================================================ */
+.scoreboard-container {
+    display: none;
+}
+
+.scoreboard-container.is-active {
+    display: block;
+}
+
+.scoreboard-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--scoreboard-spacing-md);
+}
+
+/* See CLAUDE.md - Security & Design Best Practices Mandate */
+/* Updated: 2025-10-31 - Changed to pure black background per user request */
+.scoreboard-item {
+    position: relative;
+    background: #000000;
+    border-radius: var(--scoreboard-radius-md);
+    border: 1px solid var(--scoreboard-border);
+    padding: var(--scoreboard-spacing-lg) var(--scoreboard-spacing-md) var(--scoreboard-spacing-md);
+    transition: transform var(--scoreboard-transition-base), box-shadow var(--scoreboard-transition-base), border-color var(--scoreboard-transition-base);
+    cursor: pointer;
+    min-height: 240px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--scoreboard-spacing-sm);
+}
+
+.scoreboard-item:hover,
+.scoreboard-item:focus-visible {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 32px rgba(0, 0, 0, 0.28);
+    border-color: rgba(255, 238, 0, 0.6);
+}
+
+.scoreboard-item.no-reviews {
+    border-style: dashed;
+    opacity: 0.7;
+}
+
+.scoreboard-rank {
+    position: absolute;
+    top: -14px;
+    right: var(--scoreboard-spacing-md);
+    width: 54px;
+    height: 54px;
+    background: var(--scoreboard-gold);
+    color: #000;
+    border-radius: 50%;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 24px rgba(255, 238, 0, 0.28);
+    border: 3px solid var(--scoreboard-panel-alt);
+}
+
+.scoreboard-rank.top3 {
+    background: linear-gradient(135deg, var(--scoreboard-gold), #fff566);
+    box-shadow: 0 16px 30px rgba(255, 238, 0, 0.45);
+}
+
+.scoreboard-state {
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-top: 0.25rem;
+}
+
+.scoreboard-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-top: var(--scoreboard-spacing-sm);
+}
+
+.scoreboard-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 600;
+}
+
+.scoreboard-stars {
+    display: inline-flex;
+    gap: 0.25rem;
+    color: var(--scoreboard-gold);
+}
+
+.scoreboard-stars .far {
+    opacity: 0.35;
+}
+
+.scoreboard-reviews {
+    color: var(--scoreboard-text-tertiary);
+    font-size: 0.9rem;
+}
+
+.scoreboard-avg-wage {
+    margin-top: var(--scoreboard-spacing-sm);
+    padding: 0.55rem 0.75rem;
+    border-radius: var(--scoreboard-radius-sm);
+    background: rgba(40, 167, 69, 0.12);
+    border: 1px solid rgba(40, 167, 69, 0.35);
+    color: #a6ffb2;
+    font-weight: 600;
+}
+
+.scoreboard-no-reviews-msg {
+    margin-top: auto;
+    padding-top: var(--scoreboard-spacing-md);
+    font-style: italic;
+    color: var(--scoreboard-text-tertiary);
+}
+
+/* ================================================
+   LOADERS & EMPTY STATES
+   ================================================ */
+.scoreboard-loading,
+.scoreboard-error,
+.scoreboard-no-results {
+    text-align: center;
+    padding: var(--scoreboard-spacing-xl) var(--scoreboard-spacing-md);
+    border: 1px dashed var(--scoreboard-border-strong);
+    border-radius: var(--scoreboard-radius-md);
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--scoreboard-text-secondary);
+}
+
+.scoreboard-loading-icon,
+.scoreboard-no-results-icon,
+.scoreboard-error-icon {
+    font-size: 2.2rem;
+    display: block;
+    margin-bottom: var(--scoreboard-spacing-sm);
+}
+
+.scoreboard-loading-icon {
+    animation: scoreboard-spin 0.9s linear infinite;
+}
+
+@keyframes scoreboard-spin {
+    to { transform: rotate(360deg); }
+}
+
+.scoreboard-no-results {
+    margin-top: var(--scoreboard-spacing-lg);
+}
+
+.scoreboard-hidden {
+    display: none !important;
+}
+
+/* ================================================
+   REVIEWS MODAL
+   ================================================ */
+.scoreboard-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.88);
+    z-index: 3000;
+    padding: var(--scoreboard-spacing-md);
+}
+
+.scoreboard-modal.is-open {
+    display: flex;
+}
+
+.scoreboard-modal-dialog {
+    background: #050505;
+    border-radius: var(--scoreboard-radius-lg);
+    border: 1px solid var(--scoreboard-border-strong);
+    max-width: 720px;
+    width: 100%;
+    max-height: 85vh;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+}
+
+.scoreboard-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--scoreboard-spacing-md) var(--scoreboard-spacing-lg);
+    border-bottom: 1px solid var(--scoreboard-border);
+}
+
+.scoreboard-modal-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.scoreboard-modal-close {
+    background: transparent;
+    border: none;
+    color: var(--scoreboard-text-secondary);
+    font-size: 1.6rem;
+    cursor: pointer;
+}
+
+.scoreboard-modal-body {
+    padding: var(--scoreboard-spacing-md) var(--scoreboard-spacing-lg);
+    overflow-y: auto;
+}
+
+/* ================================================
+   REVIEWS POPUP - Modal Body Constraints
+   Prevent overflow and enable scrolling
+   Updated: 2025-11-01 - Added max height and scroll behavior
+   See docs/review-container.md for layout documentation
+   ================================================ */
+
+#reviews-popup .modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-top: var(--scoreboard-spacing-lg);
+    padding-bottom: var(--scoreboard-spacing-lg);
+}
+
+/* Custom scrollbar styling for reviews popup */
+#reviews-popup .modal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+#reviews-popup .modal-body::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+#reviews-popup .modal-body::-webkit-scrollbar-thumb {
+    background: rgba(255, 238, 0, 0.3);
+    border-radius: 4px;
+}
+
+#reviews-popup .modal-body::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 238, 0, 0.5);
+}
+
+/* Firefox scrollbar styling */
+#reviews-popup .modal-body {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 238, 0, 0.3) rgba(0, 0, 0, 0.2);
+}
+
+#reviews-popup .reviews-popup-list {
+    margin-top: 1rem;
+}
+
+/* ================================================
+   REVIEWS POPUP - Modal Header Layout
+   Position title and close button properly
+   Updated: 2025-11-01 - UI/UX best practices positioning
+   See docs/modal-ui.md for layout documentation
+   ================================================ */
+
+#reviews-popup .modal-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--scoreboard-spacing-md) var(--scoreboard-spacing-lg);
+    border-bottom: 1px solid var(--scoreboard-border-strong);
+}
+
+#reviews-popup .reviews-popup-title {
+    margin: 0;
+    flex: 1;
+    padding-right: 2rem;
+}
+
+/* ================================================
+   REVIEWS POPUP - Close Button (Top-Right Corner)
+   Independent style following UI/UX best practices
+   Updated: 2025-11-01 - Repositioned to top-right corner
+   See docs/modal-ui.md for close button specifications
+   ================================================ */
+
+#reviews-popup .modal-close {
+    /* Reset btn-standard styles for modal close button */
+    all: unset;
+
+    /* Position in top-right corner of modal header */
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+
+    /* Standard close button sizing */
+    width: 2rem;
+    height: 2rem;
+
+    /* Visual styling */
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 1;
+
+    /* Center the × symbol */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Interactivity */
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all 0.2s ease;
+
+    /* Accessibility - ensure adequate touch target */
+    min-width: 44px;
+    min-height: 44px;
+}
+
+#reviews-popup .modal-close:hover {
+    color: rgba(255, 255, 255, 0.9);
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+#reviews-popup .modal-close:focus {
+    outline: 2px solid var(--scoreboard-gold);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+#reviews-popup .modal-close:active {
+    transform: scale(0.95);
+}
+
+/* ================================================
+   REVIEW CARDS - Original Production Design
+   See docs/review-container.md for design documentation
+   Updated: 2025-10-31 - Restored original design from share-experience.html
+   ================================================ */
+
+.scoreboard-review-item {
+    background: #1a1a1a;
+    border: 2px solid #333333;
+    border-radius: 8px;
+    padding: 1.5em;
+    margin-bottom: 1.5em;
+    transition: all 0.3s ease;
+}
+
+.scoreboard-review-item:hover {
+    border-color: #ffee00;
+    transform: translateX(5px);
+}
+
+/* Header: User Icon + User Info + Rating */
+.scoreboard-review-header {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.8em;
+    border-bottom: 1px solid #333333;
+}
+
+.scoreboard-review-user-icon {
+    font-size: 2em;
+    color: #ffee00;
+    min-width: 40px;
+    text-align: center;
+}
+
+.scoreboard-review-user-info {
+    flex: 1;
+}
+
+.scoreboard-review-user-name {
+    color: #ffee00;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 0.3em;
+}
+
+.scoreboard-review-metadata {
+    color: #888888;
+    font-size: 0.85em;
+}
+
+.scoreboard-review-rating {
+    color: #ffee00;
+    font-size: 1.2em;
+}
+
+/* Review Details Grid - 6 items: Location, Wage, Hours/Week, Year(s) Visited, Times Visited, Rating */
+.scoreboard-review-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1em;
+    margin-bottom: 1em;
+    padding: 1em;
+    background: rgba(255, 238, 0, 0.05);
+    border-radius: 6px;
+}
+
+.scoreboard-review-detail-item {
+    display: flex;
+    flex-direction: row;
+    gap: 0.3em;
+}
+
+.scoreboard-review-detail-label {
+    color: #888888;
+    font-size: 0.85em;
+    font-weight: bold;
+}
+
+.scoreboard-review-detail-value {
+    color: #ffffff;
+    font-size: 1em;
+}
+
+/* Review Experience Text */
+.scoreboard-review-experience-text {
+    color: #ffffff;
+    line-height: 1.6;
+    padding: 1em;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    border-left: 3px solid #28a745;
+}
+
+.scoreboard-review-experience-label {
+    color: #28a745;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    display: inline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .scoreboard-review-details {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ================================================
+   CTA WRAP
+   ================================================ */
+.scoreboard-cta {
+    margin-top: var(--scoreboard-spacing-xl);
+    background: linear-gradient(135deg, rgba(255, 238, 0, 0.16), rgba(40, 167, 69, 0.16));
+    border-radius: var(--scoreboard-radius-lg);
+    border: 1px solid rgba(255, 238, 0, 0.4);
+    padding: var(--scoreboard-spacing-lg);
+    text-align: center;
+}
+
+.scoreboard-cta h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--scoreboard-spacing-sm);
+}
+
+.scoreboard-cta p {
+    color: var(--scoreboard-text-secondary);
+    margin-bottom: var(--scoreboard-spacing-md);
+}
+
+.scoreboard-cta .btn-standard {
+    min-width: 220px;
+}
+
+.scoreboard-cta.scoreboard-cta-embed {
+    max-width: 860px;
+    margin: 3rem auto;
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.96) 0%, rgba(6, 6, 6, 0.96) 100%);
+    border-radius: 18px;
+    border: 2px solid rgba(255, 238, 0, 0.4);
+    box-shadow: 0 12px 32px rgba(255, 238, 0, 0.25);
+    padding: 2.5rem;
+}
+
+.scoreboard-cta-embed h3 {
+    color: #ffee00;
+    font-size: 1.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.scoreboard-cta-embed p {
+    color: #d9d9d9;
+    margin-bottom: 1.75rem;
+    line-height: 1.6;
+}
+
+.scoreboard-cta-embed .btn-standard {
+    min-width: 240px;
+}
+
+.scoreboard-cta-embed .scoreboard-cta-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    margin: 0 auto 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 238, 0, 0.12);
+    border: 2px dashed rgba(255, 238, 0, 0.45);
+    color: #ffee00;
+}
+
+.scoreboard-cta-embed .scoreboard-cta-icon i {
+    font-size: 2rem;
+}
+
+.scoreboard-cta-embed .scoreboard-cta-note {
+    margin-top: 1.25rem;
+    color: #b3b3b3;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.scoreboard-cta-embed .scoreboard-cta-note i {
+    color: #ffee00;
+}
+
+/* ================================================
+   ACCESSIBILITY HELPERS
+   ================================================ */
+.scoreboard-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ================================================
+   RESPONSIVE BREAKPOINTS
+   ================================================ */
+@media (max-width: 1024px) {
+    .scoreboard-controls-grid {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .scoreboard-sort,
+    .scoreboard-results {
+        max-width: 100%;
+    }
+
+    .scoreboard-results {
+        align-self: flex-start;
+    }
+}
+
+@media (max-width: 768px) {
+    .scoreboard-hero {
+        padding: var(--scoreboard-spacing-lg) var(--scoreboard-spacing-md);
+    }
+
+    .scoreboard-controls {
+        padding: var(--scoreboard-spacing-md);
+    }
+
+    .scoreboard-tab-button {
+        flex: 1 0 calc(50% - var(--scoreboard-spacing-sm));
+        text-align: center;
+    }
+
+    .scoreboard-list {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+}
+
+@media (max-width: 520px) {
+    .scoreboard-shell {
+        padding: 0 var(--scoreboard-spacing-sm) var(--scoreboard-spacing-xl);
+    }
+
+    .scoreboard-metric {
+        text-align: left;
+    }
+
+    .scoreboard-controls-grid {
+        gap: var(--scoreboard-spacing-xs);
+    }
+
+    .scoreboard-results {
+        width: 100%;
+        text-align: center;
+    }
+
+    .scoreboard-cta.scoreboard-cta-embed {
+        padding: 1.75rem;
+        margin: 2.5rem auto;
+    }
+
+    .scoreboard-cta-embed .btn-standard {
+        width: 100%;
+    }
+}
